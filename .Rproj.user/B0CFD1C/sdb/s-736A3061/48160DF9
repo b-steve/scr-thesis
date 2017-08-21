@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#=====================================#\n#      Main simulation function       #\n#=====================================#\n#' @export\nscr.fit = function(capthist, traps, mask,\n                   start = NULL) {\n\n  ## Taking the capthist, traps, and mask and maximising likelihood\n  ## - Requires start values\n  fit = optim(start, scr.nll,\n              caps = capthist,\n              traps = traps,\n              mask = mask)\n\n  ## Returning the fitted parameters in a named vector\n  setNames(fit$par, nm = c(\"D\", \"g0\", \"sigma\"))\n}\n\n#==========================================================================#\n#==========================================================================#\n\n\n#=====================================#\n#          Package postamble          #\n#=====================================#\n\n#' @import Rcpp\n#' @useDynLib scr\nNULL\n",
+    "created" : 1502613420728.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "412304516",
+    "id" : "48160DF9",
+    "lastKnownWriteTime" : 1503275246,
+    "last_content_update" : 1503275246329,
+    "path" : "~/Business/University/Master's/Project/Package/scr/R/scr.fit.R",
+    "project_path" : "R/scr.fit.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

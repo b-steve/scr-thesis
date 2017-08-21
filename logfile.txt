@@ -1,0 +1,260 @@
+starting worker pid=8792 on localhost:11230 at 14:14:06.635
+starting worker pid=1388 on localhost:11230 at 14:14:06.854
+starting worker pid=6052 on localhost:11230 at 14:14:07.076
+starting worker pid=3676 on localhost:11230 at 14:14:07.322
+starting worker pid=7844 on localhost:11230 at 14:14:07.552
+starting worker pid=5656 on localhost:11230 at 14:15:23.541
+starting worker pid=9148 on localhost:11230 at 14:15:23.766
+starting worker pid=4752 on localhost:11230 at 14:15:23.996
+starting worker pid=1056 on localhost:11230 at 14:15:24.224
+starting worker pid=9348 on localhost:11230 at 14:15:24.454
+starting worker pid=6056 on localhost:11230 at 14:15:37.703
+starting worker pid=10008 on localhost:11230 at 14:15:37.940
+starting worker pid=3916 on localhost:11230 at 14:15:38.175
+starting worker pid=3012 on localhost:11230 at 14:15:38.407
+starting worker pid=344 on localhost:11230 at 14:15:38.637
+Checking data 
+Preparing detection design matrices 
+Preparing density design matrix 
+Finding initial parameter values... 
+Initial values  D = 781.06378, g0 = 0.1, sigma = 12.02092 
+Maximizing likelihood... 
+Eval     Loglik        D  lambda0    sigma 
+   1  -2221.260   6.6607  -2.2504   2.4866 
+   2  -2221.260   6.6607  -2.2504   2.4866 
+   3  -2221.260   6.6607  -2.2504   2.4866 
+   4  -2221.259   6.6607  -2.2504   2.4866 
+   5  -2221.257   6.6607  -2.2504   2.4867 
+   6 -15596.247   6.6173   2.1966  11.4434 
+   7  -3050.629   6.6505  -1.2055   4.5911 
+   8  -1920.944   6.6570  -1.8805   3.2315 
+   9  -1920.947   6.6571  -1.8805   3.2315 
+  10  -1920.944   6.6570  -1.8805   3.2315 
+  11  -1920.946   6.6570  -1.8805   3.2315 
+  12  -1778.736   6.4744  -1.8174   3.0514 
+  13  -1778.738   6.4744  -1.8174   3.0514 
+  14  -1778.736   6.4744  -1.8174   3.0514 
+  15  -1778.737   6.4744  -1.8174   3.0514 
+  16  -1546.395   6.0228  -1.3949   2.8744 
+  17  -1546.395   6.0228  -1.3949   2.8744 
+  18  -1546.394   6.0228  -1.3949   2.8744 
+  19  -1546.394   6.0228  -1.3949   2.8744 
+  20   -836.754   3.9583   0.7369   2.4668 
+  21   -836.754   3.9583   0.7369   2.4668 
+  22   -836.754   3.9583   0.7369   2.4668 
+  23   -836.752   3.9583   0.7369   2.4668 
+  24   -664.597   2.6216   2.0781   2.5205 
+  25   -664.597   2.6216   2.0781   2.5205 
+  26   -664.598   2.6216   2.0781   2.5205 
+  27   -664.597   2.6216   2.0781   2.5205 
+  28   -599.583   3.1804   1.5006   2.6552 
+  29   -599.583   3.1804   1.5006   2.6552 
+  30   -599.583   3.1804   1.5006   2.6552 
+  31   -599.583   3.1804   1.5006   2.6552 
+  32   -582.558   3.3817   1.3162   2.7766 
+  33   -582.558   3.3817   1.3162   2.7766 
+  34   -582.558   3.3817   1.3162   2.7766 
+  35   -582.558   3.3817   1.3162   2.7766 
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+starting worker pid=8012 on localhost:11230 at 14:16:32.436
+  36   -577.712   3.4044   1.3414   2.8206 
+starting worker pid=1104 on localhost:11230 at 14:16:32.690
+starting worker pid=4024 on localhost:11230 at 14:16:32.933
+starting worker pid=4712 on localhost:11230 at 14:16:33.180
+starting worker pid=592 on localhost:11230 at 14:16:33.439
+  37   -577.712   3.4044   1.3414   2.8206 
+  38   -577.712   3.4044   1.3414   2.8206 
+Checking data 
+Preparing detection design matrices 
+Preparing density design matrix 
+Finding initial parameter values... 
+Initial values  D = 781.06378, g0 = 0.1, sigma = 12.02092 
+Maximizing likelihood... 
+Eval     Loglik        D  lambda0    sigma 
+   1  -2221.260   6.6607  -2.2504   2.4866 
+  39   -577.712   3.4044   1.3414   2.8206 
+   2  -2221.260   6.6607  -2.2504   2.4866 
+  40   -574.565   3.4597   1.3685   2.8410 
+   3  -2221.260   6.6607  -2.2504   2.4866 
+  41   -574.565   3.4597   1.3685   2.8410 
+   4  -2221.259   6.6607  -2.2504   2.4866 
+   5  -2221.257   6.6607  -2.2504   2.4867 
+  42   -574.565   3.4597   1.3685   2.8410 
+   6 -15596.247   6.6173   2.1966  11.4434 
+  43   -574.565   3.4597   1.3685   2.8410 
+   7  -3050.629   6.6505  -1.2055   4.5911 
+  44   -569.091   3.6126   1.4224   2.8516 
+   8  -1920.944   6.6570  -1.8805   3.2315 
+  45   -569.091   3.6126   1.4224   2.8516 
+   9  -1920.947   6.6571  -1.8805   3.2315 
+  46   -569.091   3.6126   1.4224   2.8516 
+  10  -1920.944   6.6570  -1.8805   3.2315 
+  47   -569.092   3.6126   1.4224   2.8516 
+  11  -1920.946   6.6570  -1.8805   3.2315 
+  48   -563.059   3.8313   1.5033   2.8256 
+  12  -1778.736   6.4744  -1.8174   3.0514 
+  49   -563.059   3.8313   1.5033   2.8256 
+  13  -1778.738   6.4744  -1.8174   3.0514 
+  50   -563.059   3.8313   1.5033   2.8256 
+  14  -1778.736   6.4744  -1.8174   3.0514 
+  51   -563.059   3.8313   1.5033   2.8256 
+  15  -1778.737   6.4744  -1.8174   3.0514 
+  52   -558.871   3.9811   1.5803   2.7646 
+  16  -1546.395   6.0228  -1.3949   2.8744 
+  53   -558.871   3.9811   1.5803   2.7646 
+  17  -1546.395   6.0228  -1.3949   2.8744 
+  54   -558.871   3.9811   1.5803   2.7646 
+  18  -1546.394   6.0228  -1.3949   2.8744 
+  55   -558.871   3.9811   1.5803   2.7646 
+  19  -1546.394   6.0228  -1.3949   2.8744 
+  56   -557.867   4.0070   1.5937   2.7270 
+  20   -836.754   3.9583   0.7369   2.4668 
+  57   -557.867   4.0070   1.5937   2.7270 
+  21   -836.754   3.9583   0.7369   2.4668 
+  58   -557.867   4.0070   1.5937   2.7270 
+  22   -836.754   3.9583   0.7369   2.4668 
+  23   -836.752   3.9583   0.7369   2.4668 
+  59   -557.867   4.0070   1.5937   2.7270 
+  24   -664.597   2.6216   2.0781   2.5205 
+  60   -557.835   4.0030   1.5796   2.7289 
+  25   -664.597   2.6216   2.0781   2.5205 
+  61   -557.835   4.0030   1.5796   2.7289 
+  26   -664.598   2.6216   2.0781   2.5205 
+  62   -557.835   4.0030   1.5796   2.7289 
+  27   -664.597   2.6216   2.0781   2.5205 
+  28   -599.583   3.1804   1.5006   2.6552 
+  63   -557.835   4.0030   1.5796   2.7289 
+  29   -599.583   3.1804   1.5006   2.6552 
+  64   -557.834   3.9998   1.5780   2.7293 
+  30   -599.583   3.1804   1.5006   2.6552 
+  65   -557.834   3.9998   1.5780   2.7293 
+  31   -599.583   3.1804   1.5006   2.6552 
+  66   -557.834   3.9998   1.5780   2.7293 
+  32   -582.558   3.3817   1.3162   2.7766 
+  67   -557.834   3.9998   1.5780   2.7293 
+  33   -582.558   3.3817   1.3162   2.7766 
+  68   -557.834   4.0001   1.5779   2.7293 
+  34   -582.558   3.3817   1.3162   2.7766 
+  69   -557.834   4.0001   1.5779   2.7293 
+  35   -582.558   3.3817   1.3162   2.7766 
+  70   -557.834   4.0001   1.5779   2.7293 
+  36   -577.712   3.4044   1.3414   2.8206 
+  71   -557.834   4.0001   1.5779   2.7293 
+  37   -577.712   3.4044   1.3414   2.8206 
+  72   -557.834   4.0001   1.5779   2.7293 
+  38   -577.712   3.4044   1.3414   2.8206 
+  73   -557.834   4.0001   1.5779   2.7293 
+  74   -557.834   4.0001   1.5779   2.7293 
+  39   -577.712   3.4044   1.3414   2.8206 
+  75   -557.834   4.0001   1.5779   2.7293 
+  40   -574.565   3.4597   1.3685   2.8410 
+  76   -557.834   4.0005   1.5779   2.7293 
+  41   -574.565   3.4597   1.3685   2.8410 
+  77   -557.834   4.0001   1.5781   2.7293 
+  42   -574.565   3.4597   1.3685   2.8410 
+  78   -557.834   4.0001   1.5779   2.7296 
+  43   -574.565   3.4597   1.3685   2.8410 
+  79   -557.834   4.0009   1.5779   2.7293 
+  44   -569.091   3.6126   1.4224   2.8516 
+  80   -557.834   4.0005   1.5781   2.7293 
+  45   -569.091   3.6126   1.4224   2.8516 
+  81   -557.834   4.0005   1.5779   2.7296 
+  46   -569.091   3.6126   1.4224   2.8516 
+  82   -557.834   4.0001   1.5782   2.7293 
+  47   -569.092   3.6126   1.4224   2.8516 
+  83   -557.834   4.0001   1.5781   2.7296 
+  48   -563.059   3.8313   1.5033   2.8256 
+  84   -557.834   4.0001   1.5779   2.7299 
+Completed in 130.11 seconds at 14:17:52 28 Apr 2017 
+Error in serialize(data, node$con, xdr = FALSE) : 
+  error writing to connection
+Calls: <Anonymous> ... doTryCatch -> sendData -> sendData.SOCK0node -> serialize
+In addition: Warning messages:
+1: In updatemodel(model, detectfn, 14:18, "g0", "lambda0") :
+  replacing g0 by lambda0 in model for detectfn 14
+2: In autoini(ch, msk, binomN = details$binomN, ignoreusage = details$ignoreusage) :
+  'autoini' failed to find g0; setting initial g0 = 0.1
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCK0node -> unserialize
+Execution halted
+  49   -563.059   3.8313   1.5033   2.8256 
+  50   -563.059   3.8313   1.5033   2.8256 
+  51   -563.059   3.8313   1.5033   2.8256 
+  52   -558.871   3.9811   1.5803   2.7646 
+  53   -558.871   3.9811   1.5803   2.7646 
+  54   -558.871   3.9811   1.5803   2.7646 
+  55   -558.871   3.9811   1.5803   2.7646 
+  56   -557.867   4.0070   1.5937   2.7270 
+  57   -557.867   4.0070   1.5937   2.7270 
+  58   -557.867   4.0070   1.5937   2.7270 
+  59   -557.867   4.0070   1.5937   2.7270 
+  60   -557.835   4.0030   1.5796   2.7289 
+  61   -557.835   4.0030   1.5796   2.7289 
+  62   -557.835   4.0030   1.5796   2.7289 
+  63   -557.835   4.0030   1.5796   2.7289 
+  64   -557.834   3.9998   1.5780   2.7293 
+  65   -557.834   3.9998   1.5780   2.7293 
+  66   -557.834   3.9998   1.5780   2.7293 
+  67   -557.834   3.9998   1.5780   2.7293 
+  68   -557.834   4.0001   1.5779   2.7293 
+  69   -557.834   4.0001   1.5779   2.7293 
+  70   -557.834   4.0001   1.5779   2.7293 
+  71   -557.834   4.0001   1.5779   2.7293 
+  72   -557.834   4.0001   1.5779   2.7293 
+  73   -557.834   4.0001   1.5779   2.7293 
+  74   -557.834   4.0001   1.5779   2.7293 
+  75   -557.834   4.0001   1.5779   2.7293 
+  76   -557.834   4.0005   1.5779   2.7293 
+  77   -557.834   4.0001   1.5781   2.7293 
+  78   -557.834   4.0001   1.5779   2.7296 
+  79   -557.834   4.0009   1.5779   2.7293 
+  80   -557.834   4.0005   1.5781   2.7293 
+  81   -557.834   4.0005   1.5779   2.7296 
+  82   -557.834   4.0001   1.5782   2.7293 
+  83   -557.834   4.0001   1.5781   2.7296 
+  84   -557.834   4.0001   1.5779   2.7299 
+Completed in 130.76 seconds at 14:18:47 28 Apr 2017 
+Warning messages:
+1: In updatemodel(model, detectfn, 14:18, "g0", "lambda0") :
+  replacing g0 by lambda0 in model for detectfn 14
+2: In autoini(ch, msk, binomN = details$binomN, ignoreusage = details$ignoreusage) :
+  'autoini' failed to find g0; setting initial g0 = 0.1

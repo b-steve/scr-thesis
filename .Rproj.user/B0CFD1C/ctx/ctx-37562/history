@@ -1,0 +1,512 @@
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * sigma))
+limits = list(xlim = range(test2[, 1], na.rm = TRUE),
+ylim = range(test2[, 2], na.rm = TRUE))
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15))
+matrix(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE), ncol = 2)
+matrix(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE), nrow =  = 2)
+matrix(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE), nrow = 2)
+matrix(c(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE)), nrow = 2)
+range(test2[, 1])
+matrix(xlim = range(test2[, 1], na.rm = TRUE), ylim = range(test2[, 2], na.rm = TRUE), nrow = 2)
+matrix("xlim" = range(test2[, 1], na.rm = TRUE), "ylim" = range(test2[, 2], na.rm = TRUE), nrow = 2)
+list(xlim = NULL, ylim = NULL)
+limits
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * sigma))
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15))
+as.list(sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15)))
+as.numeri (sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15)))
+as.numeric(sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15)))
+list(sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15)))
+as.list(sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15)), length = 2)
+as.list(sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15)), length = 1)
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15)), length = 2
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15))
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15))[1,]
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15))[, 1]
+?Reduce
+limits
+Reduce(c(-1, 1) * (5 * 15), limits)
+Reduce(function(x) x * c(-1, 1) * (5 * 15), limits)
+Reduce("+", limits)
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15))[, 1]
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15))
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * 15)) * -1
+matrix(xlim = range(test2[, 1], na.rm = TRUE), ylim = range(test2[, 2], na.rm = TRUE), nrow = 2)
+matrix("xlim" = range(test2[, 1], na.rm = TRUE), "ylim" = range(test2[, 2], na.rm = TRUE), nrow = 2)
+matrix(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE), nrow = 2)
+matrix(c(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE)), nrow = 2)
+matrix(c(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE)), nrow = 2) + (c(-1, 1) * (5 * 15))
+plot(testmask)
+abline(v = matrix(c(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE)), nrow = 2) + (c(-1, 1) * (5 * 15)))
+abline(matrix(c(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE)), nrow = 2) + (c(-1, 1) * (5 * 15)))
+plot(testmask)
+abline(v = (matrix(c(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE)), nrow = 2) + (c(-1, 1) * (5 * 15)))[, 2])
+abline(v = (matrix(c(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE)), nrow = 2) + (c(-1, 1) * (5 * 15)))[, 1])
+abline(h = (matrix(c(range(test2[, 1], na.rm = TRUE), range(test2[, 2], na.rm = TRUE)), nrow = 2) + (c(-1, 1) * (5 * 15)))[, 2])
+sigma = 15
+sapply(1:2, function(lim) limits[[lim]] + c(-1, 1) * (5 * sigma))
+matrix(c(range(test2[, 1], na.rm = TRUE),
+range(test2[, 2], na.rm = TRUE)), nrow = 2) + (c(-1, 1) * (5 * 15))
+data.frame(c(range(test2[, 1], na.rm = TRUE),
+range(test2[, 2], na.rm = TRUE)), nrow = 2) + (c(-1, 1) * (5 * 15))
+as.data.frame(c(range(test2[, 1], na.rm = TRUE),
+range(test2[, 2], na.rm = TRUE)), nrow = 2) + (c(-1, 1) * (5 * 15))
+as.data.frame(xlim = range(test2[, 1], na.rm = TRUE),
+ylim = range(test2[, 2], na.rm = TRUE))) + (c(-1, 1) * (5 * 15))
+as.data.frame(xlim = range(test2[, 1], na.rm = TRUE),
+ylim = range(test2[, 2], na.rm = TRUE)) + (c(-1, 1) * (5 * 15))
+data.frame(xlim = range(test2[, 1], na.rm = TRUE),
+ylim = range(test2[, 2], na.rm = TRUE)) + (c(-1, 1) * (5 * 15))
+(data.frame(xlim = range(test2[, 1], na.rm = TRUE),
+ylim = range(test2[, 2], na.rm = TRUE)) + (c(-1, 1) * (5 * 15)))$xlim
+range(test2[, 1], na.rm = TRUE)
+list(xlim = range(test2[, 1], na.rm = TRUE),
+ylim = range(test2[, 2], na.rm = TRUE))
+list(xlim = range(test2[, 1], na.rm = TRUE),
+ylim = range(test2[, 2], na.rm = TRUE)) + 1
+?lapply
+limits
+lapply(limits, "+", c(-1, 1) * (5 * 15))
+limits
+3 - 5 * 15
+83 + 5 * 15
+library(scr)
+scr.sim(5, 15, test2, density = 0.005)
+scr.sim(5, 15, test2, density = 0.005, draw = TRUE)
+library(scr)
+debug(scr.sim)
+caps = scr.sim(5, 15, test2, density = 0.005, draw = TRUE)
+limits
+limits
+limits$xlim[2]
+limits$xlim[2] - limits$xlim[1]
+abs(limits$xlim[2] - limits$xlim[1])
+-72 + 158
+area
+100 * 100
+plot(testmask)
+cat(n)
+coords
+coords = pointgen(50, xlim = limits$xlim, ylim = limits$ylim)
+plot.new()
+plot.window(xlim = limits$xlim,
+ylim = limits$ylim,
+xaxs = "i", yaxs = "i")
+box()
+## Setting up the traps
+points(traplocs, pch = 3, col = "red")
+## Plotting the activity centres
+points(coords, ...)
+omega = NULL
+for(i in 1:nrow(coords)) {
+d = eucdist(coords[i,], traplocs)
+omega = rbind(omega,
+eval(parse(text = rDistr)))
+}
+undebug(scr.sim)
+debug(scr.sim)
+caps = scr.sim(5, 15, test2, density = 0.005, draw = TRUE)
+n = 50
+coords = pointgen(n, xlim = limits$xlim, ylim = limits$ylim)
+omega = NULL
+for(i in 1:nrow(coords)) {
+d = eucdist(coords[i,], traplocs)
+omega = rbind(omega,
+eval(parse(text = rDistr)))
+}
+omega
+omega
+points(testmask, pch = 16, col = rgb(169, 169, 169, alpha = 0.03))
+?hcl
+points(testmask, pch = 16, col = hcl(169, 169, 169, alpha = 0.03))
+points(testmask, pch = 16, col = hcl(h = 169, alpha = 0.03))
+points(testmask, pch = 16, col = hcl(h = 169, alpha = 0.5))
+rgb2hsv(c(169, 169, 169))
+hsv
+points(testmask, pch = 16, col = hsv(h = 0, s = 0, v = 0.6627451, alpha = 0.5))
+points(testmask, pch = 16, col = hsv(h = 0, s = 0, v = 0.6627451, alpha = 0.05))
+plot.new()
+plot.window(xlim = limits$xlim,
+ylim = limits$ylim,
+xaxs = "i", yaxs = "i")
+box()
+## Setting up the traps
+points(traplocs, pch = 3, col = "red")
+## Plotting the activity centres
+points(coords, ...)
+points(coords, ...)
+caps = scr.sim(5, 15, test2, density = 0.005, draw = TRUE)
+n = 50
+caps = scr.sim(5, 15, test2, density = 0.005, draw = TRUE)
+n = 50
+omega
+points(testmask, pch = 16, col = hsv(h = 0, s = 0, v = 0.6627451, alpha = 0.05))
+points(testmask, pch = 16, col = hsv(h = 0, s = 0, v = 0.6627451, alpha = 0.1))
+which.min(coords[, 1])
+points(coords[46, 1], coords[46, 2], pch = 16, col = "midnightblue")
+which.max(coords[, 2])
+points(coords[19, 1], coords[19, 2], pch = 16, col = "steelblue")
+omega
+omega[1, ] == 0
+sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0))
+sum(sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0)))
+points(omega[sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0)), 1], omega[sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0)), 2], pch = 16, col = "firebrick1")
+omega[sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0)), ]
+sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0))
+omega[sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0)), ]
+sum(omega[1, ])
+sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0))
+which(sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0)))
+omega[which(sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0))), ]
+omega[which(sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0))), 1]
+omega[which(sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0))), ]
+which(sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0)))
+points(coords[which(sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0))), 1], coords[which(sapply(1:nrow(omega), function(rowNum) all(omega[rowNum, ] == 0))), 2], pch = 16, col = "firebrick1")
+caps = scr.sim(5, 15, test2, density = 0.005, draw = TRUE)
+density
+area
+density * area
+density = 0.0005
+density * area
+cat(n)
+print(n)
+sigma
+omega
+coords[1,]
+points(coords[1,1], coords[1, 2], pch = 16, col = "firebrick1")
+points(testmask, pch = 16, col = hsv(h = 0, s = 0, v = 0.6627451, alpha = 0.095))
+lambda_0
+d
+lambda_0 * exp(-d^2 / (2 * sigma^2))
+limits
+?lines
+lines(c(158, 158 + 15), y = rep(174, 2))
+axis(1)
+axis(2)
+list(xlim = range(test2[, 1], na.rm = TRUE),
+ylim = range(test2[, 2], na.rm = TRUE))
+lines(c(83, 83 + 15), y = rep(99, 2))
+traplocs
+lines(c(83, 83 + 15), y = rep(48, 2))
+omega
+traplocs
+coords
+which(coords[, 1] > 40 & coords[, 1] < 50)
+points(coords[17, 1], coords[17, 2], pch = 16, col = "red")
+omega[17,]
+lambda_0
+undebug(scr.sim)
+library(scr)
+colnames(test2) = c("x", "y")
+testraps = read.traps(data = data.frame(testID = 1:nrow(test2), test2), detector = "count")
+testmask = make.mask(testraps)
+caps = scr.sim(5, 15, test2, density = 0.005)
+captures = toCapthist(caps)
+capt <- make.capthist(captures, testraps, fmt = "trapID")
+capt[, 1, ]
+test.fit = secr.fit(capt, mask = testmask)
+?secr.fit
+library(parallel)
+?parallel
+detectCores()
+test.fit
+log(3.67492393)
+debug(scr.sim)
+caps = scr.sim(5, 15, test2, density = 0.005)
+area
+density
+density * area
+50 / 10000
+1e5
+library(scr)
+test = cbind(rep(seq(1, 9, length = 9), 3),
+rep(seq(9, 1, length = 9), each = 9))
+plot(test)
+test
+?scr.sim
+?secr.fit
+library(scr)
+Rcpp::sourceCpp('src/scr.cpp')
+Rcpp::sourceCpp('src/scr.cpp')
+test = cbind(1:99, rep(99:1, each = 99))
+test2 = test[sample(1:nrow(test), (nrow(test) * 16) / 9800), ]
+caps = scr.sim(5, 15, test2, density = 50)
+library(scr)
+caps = scr.sim(5, 15, test2, density = 50)
+head(caps)
+dropBlanks(caps)
+dropBlanks(matrix(rep(0, 10)))
+dropBlanks(matrix(c(rep(0, 10), rep(1, 10))))
+matrix(c(rep(0, 10), rep(1, 10)))
+matrix(c(rep(0, 10), rep(1, 10)), ncol = 2)
+matrix(c(rep(0, 10), rep(1, 10)), nrow = 2)
+matrix(c(rep(0, 10), rep(1, 10)), nrow = 2, ncol = 5)
+rep(0, 10)
+cbind(rep(0, 10), rep(1, 10))
+rbind(rep(0, 10), rep(1, 10))
+dropBlanks(rbind(rep(0, 10), rep(1, 10)))
+Rcpp::sourceCpp('src/scr.cpp')
+dropBlanks(rbind(rep(0, 10), rep(1, 10)))
+Rcpp::sourceCpp('src/scr.cpp')
+dropBlanks(rbind(rep(0, 10), rep(1, 10)))
+Rcpp::sourceCpp('src/scr.cpp')
+dropBlanks(rbind(rep(0, 10), rep(1, 10)))
+Rcpp::sourceCpp('src/scr.cpp')
+Rcpp::sourceCpp('src/scr.cpp')
+Rcpp::sourceCpp('src/scr.cpp')
+Rcpp::sourceCpp('src/scr.cpp')
+dropBlanks(rbind(rep(0, 10), rep(1, 10)))
+caps[1,]
+all(caps[1,] == 0)
+caps[1,] == 0
+Rcpp::sourceCpp('src/scr.cpp')
+Rcpp::sourceCpp('src/scr.cpp')
+caps[1,] == 0
+dropBlanks(rbind(rep(0, 10), rep(1, 10)))
+traceback()
+class(rbind(rep(0, 10), rep(1, 10)))
+Rcpp::sourceCpp('src/scr.cpp')
+isblank(caps[1,])
+caps[1,]
+isblank(rep(1, 10))
+Rcpp::sourceCpp('src/scr.cpp')
+isblank(rep(1, 10))
+isblank(rep(0, 10))
+Rcpp::sourceCpp('src/scr.cpp')
+Rcpp::sourceCpp('src/scr.cpp')
+dropBlanks(rbind(rep(0, 10), rep(1, 10)))
+dropBlanks(rbind(0, 1))
+debug(scr.sim)
+caps = scr.sim(5, 15, test2, density = 50)
+d
+d
+d
+d
+omega
+caps = scr.sim(5, 15, test2, density = 50)
+d
+rbind(omega,
+eval(parse(text = rDistr))
+)
+eval(parse(text = rDistr))
+if(all(eval(parse(text = rDistr)) == 0) next
+?NEXT
+?next
+d
+library(scr)
+rm(list = ls())
+test = cbind(1:99, rep(99:1, each = 99))
+test2 = test[sample(1:nrow(test), (nrow(test) * 16) / 9800), ]
+caps = scr.sim(5, 15, test2, density = 50)
+head(caps)
+debug(caps)
+debug(scr.sim)
+caps = scr.sim(5, 15, test2, density = 50)
+eval(parse(text = rDistr))
+omega
+skip
+library(scr)
+caps = scr.sim(5, 15, test2, density = 50)
+head(caps)
+debug(scr.sim)
+head(caps)
+caps = scr.sim(5, 15, test2, density = 50)
+eval(parse(text = rDistr))
+eval(parse(text = rDistr))
+eval(parse(text = rDistr))
+omega
+omega
+caps = scr.sim(5, 15, test2, density = 50)
+omega
+eval(parse(text = rDistr))
+omega
+eval(parse(text = rDistr))
+omega
+omega
+eval(parse(text = rDistr))
+all(eval(parse(text = rDistr)) == 0)
+all(eval(parse(text = rDistr)) == 0)
+all(eval(parse(text = rDistr)) == 0)
+eval(parse(text = rDistr))
+library(scr)
+library(scr)
+Rcpp::sourceCpp('src/scr.cpp')
+test = cbind(1:99, rep(99:1, each = 99))
+test2 = test[sample(1:nrow(test), (nrow(test) * 16) / 9800), ]
+caps = scr.sim(5, 15, test2, density = 50)
+library(scr)
+caps = scr.sim(5, 15, test2, density = 50)
+zeroRow_mat(caps)
+identical(zeroRow_mat(caps), caps)
+sapply(1:nrow(caps), function(rowNum) all(zeroRow_mat(caps)[rowNum, ] == caps[rowNum,]))
+all(sapply(1:nrow(caps), function(rowNum) all(zeroRow_mat(caps)[rowNum, ] == caps[rowNum,])))
+any(!sapply(1:nrow(caps), function(rowNum) all(zeroRow_mat(caps)[rowNum, ] == caps[rowNum,])))
+Rcpp::sourceCpp('src/scr.cpp')
+zeroRow_mat(caps)
+dim(zeroRow_mat(caps))
+dim(caps)
+Rcpp::sourceCpp('src/scr.cpp')
+Rcpp::sourceCpp('src/scr.cpp')
+dim(zeroRow_mat(caps))
+zeroRow_mat(caps)
+tail(zeroRow_mat(caps))
+sapply(1:nrow(caps), function(x) all(zeroRow_mat(caps)[x,] == 0))
+sapply(1:nrow(caps), function(x) all(caps[x,] == 0))
+sum(sapply(1:nrow(caps), function(x) all(caps[x,] == 0)))
+nrow(caps)
+264-193
+Rcpp::sourceCpp('src/scr.cpp')
+zeroRow_mat(caps)
+Rcpp::sourceCpp('src/scr.cpp')
+Rcpp::sourceCpp('src/scr.cpp')
+Rcpp::sourceCpp('src/scr.cpp')
+zeroRow_mat(caps)
+library(scr)
+debug(scr.sim)
+caps = scr.sim(5, 15, test2, density = 50)
+counts
+counts
+counts
+omega
+counts
+omega
+undebug(scr.sim)
+caps = scr.sim(5, 15, test2, density = 50)
+debug(scr.sim); caps = scr.sim(5, 15, test2, density = 50)
+counts
+omega
+counts
+omega
+omega
+debug(scr.sim); caps = scr.sim(5, 15, test2, density = 50)
+omega
+?rbind
+library(scr)
+caps = scr.sim(5, 15, test2, density = 50)
+caps
+debug(scr.sim); caps = scr.sim(5, 15, test2, density = 50)
+counts
+counts
+counts
+omega
+omega = NULL
+counts
+counts
+rbind(omega, "" = counts)
+rbind(omega, counts)
+setNames(rbind(omega, counts), nm = "")
+matrix(omega, counts)
+matrix(omega, counts, ncol = 2)
+counts
+names(counts)
+rbind(omega, counts, row.names = FALSE)
+rbind(omega, counts, "")
+rbind(omega, counts)
+omega
+rownames(omega) = NULL
+omega
+library(scr)
+caps = scr.sim(5, 15, test2, density = 50)
+head(caps)
+caps = scr.sim(5, 15, test2, density = 50, counts = "binary")
+caps
+debug(scr.sim)
+caps
+caps = scr.sim(5, 15, test2, density = 50, counts = "binary")
+omega
+omega
+caps = scr.sim(5, 15, test2, density = 50, counts = "binary")
+counts == "binary"
+library(scr)
+caps = scr.sim(5, 15, test2, density = 50, counts = "binary")
+head(caps)
+sapply(1:nrow(caps), function(x) all(caps[x, ] == 0))
+captures = toCapthist(caps)
+head(captures)
+dim(captures)
+sum(caps)
+caps = scr.sim(5, 15, test2, density = 50, counts = "binary", draw = TRUE)
+captures = toCapthist(caps)
+plot(testmask)
+?make.mask
+colnames(test2) = c("x", "y")
+testraps = read.traps(data = data.frame(testID = 1:nrow(test2), test2), detector = "count")
+testmask = make.mask(testraps, type = "trapbuffer", buffer = 15 * 5)
+library(secr)
+colnames(test2) = c("x", "y")
+testraps = read.traps(data = data.frame(testID = 1:nrow(test2), test2), detector = "count")
+testmask = make.mask(testraps, type = "trapbuffer", buffer = 15 * 5)
+plot(testmask, pch = 16, col = hsv(0, 0, .169, alpha = 0.095))
+caps = scr.sim(5, 15, test2, density = 50, counts = "binary", draw = TRUE)
+captures = toCapthist(caps)
+capt <- make.capthist(captures, testraps, fmt = "trapID")
+points(testmask, pch = 16, col = hsv(0, 0, .169, alpha = 0.095))
+head(caps)
+caps
+library(secr)
+library(scr)
+library(scr)
+print.captures
+scr.sim
+test = cbind(1:99, rep(99:1, each = 99))
+test2 = test[sample(1:nrow(test), (nrow(test) * 16) / 9800), ]
+scr.sim(5, 15, test2, draw = TRUE)
+coords
+library(scr)
+roxygenise()
+roxygen2::roxygenise()
+library(scr)
+print.captures
+ls()
+scr.sim(5, 15, test2, draw = TRUE)
+debug(print.captures)
+methods(captures)
+methods(scr.sim)
+methods(print)
+library(scr)
+scr.sim(5, 15, test2, draw = TRUE)
+class(scr.sim(5, 15, test2, draw = TRUE))
+caps = scr.sim(5, 15, test2, draw = TRUE)
+coords(caps)
+caps
+debug(scr.sim); caps = scr.sim(5, 15, test2, draw = TRUE)
+debug(scr.sim); caps = scr.sim(5, 15, test2, draw = TRUE)
+simulated
+simulated
+length(simulated)
+coords(simulated)
+coords
+coords
+debug(coords)
+coords(caps)
+captures
+caps
+length(caps)
+caps[[2]]
+library(scr)
+caps = scr.sim(5, 15, test2, draw = TRUE)
+caps
+class(caps)
+nrow(caps)
+library(scr)
+caps = scr.sim(5, 15, test2, draw = TRUE)
+class(caps)
+nrow(caps)
+caps[[1]]
+coords(caps)
+caps[1,]
+toCapthist(caps)
+nchar("Dexteritydog1@")
+nchar(c("test", "test"))
+table(nchar(c("test", "password")))
+pw = c("password", "Dexteritydog1@", "Withandwithout1@", "@99Space", "administrator")
+rbind(pw, nchar(pw))
+pw = c(pw, "Donkeymamahorseradish$8")
+rbind(pw, nchar(pw))
+pw = c(pw, "151020503280")
+rbind(pw, nchar(pw))
+pw = c(pw, "tussie123")
+rbind(pw, nchar(pw))
+pw = c(pw, "TrustPower")
+rbind(pw, nchar(pw))
+library(scr)

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#=====================================#\n#       Log-likelihood function       #\n#=====================================#\n#' @export\nscr.nll = function(pars, caps, traps, mask) {\n  scr_nll(pars, caps, traps, mask)\n}\n\n#==========================================================================#\n#==========================================================================#\n\n\n#=====================================#\n#          Package postamble          #\n#=====================================#\n\n#' @import Rcpp\n#' @useDynLib scr\nNULL\n",
+    "created" : 1501465413027.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3270670734",
+    "id" : "769C1209",
+    "lastKnownWriteTime" : 1501465725,
+    "last_content_update" : 1501465726000,
+    "path" : "~/Business/University/Master's/Project/Package/scr/R/scr.nll.R",
+    "project_path" : "R/scr.nll.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

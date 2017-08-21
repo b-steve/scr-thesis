@@ -1,0 +1,50 @@
+[
+    {
+        "definitions" : [
+            {
+                "column" : 15,
+                "file" : "D:/HDD User/Documents/Business/University/Master's/Project/Package/scr/src/scr-fit.cpp",
+                "kind" : 6,
+                "line" : 15,
+                "name" : "eucdist_nll(NumericMatrix, NumericMatrix)",
+                "parent_name" : "",
+                "usr" : "c:@F@eucdist_nll#$@N@Rcpp@C@Matrix>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S0_#"
+            },
+            {
+                "column" : 8,
+                "file" : "D:/HDD User/Documents/Business/University/Master's/Project/Package/scr/src/scr-fit.cpp",
+                "kind" : 6,
+                "line" : 38,
+                "name" : "scr_nll(NumericVector, NumericMatrix, NumericMatrix, NumericMatrix)",
+                "parent_name" : "",
+                "usr" : "c:@F@scr_nll#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#$@N@Rcpp@C@Matrix>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S1_#S1_#"
+            }
+        ],
+        "file" : "D:/HDD User/Documents/Business/University/Master's/Project/Package/scr/src/scr-fit.cpp",
+        "file_last_write" : 1501465936
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 15,
+                "file" : "D:/HDD User/Documents/Business/University/Master's/Project/Package/scr/src/scr.cpp",
+                "kind" : 6,
+                "line" : 12,
+                "name" : "eucdist(NumericVector, NumericMatrix)",
+                "parent_name" : "",
+                "usr" : "c:@F@eucdist#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#$@N@Rcpp@C@Matrix>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#"
+            },
+            {
+                "column" : 15,
+                "file" : "D:/HDD User/Documents/Business/University/Master's/Project/Package/scr/src/scr.cpp",
+                "kind" : 6,
+                "line" : 33,
+                "name" : "pointgen(int, NumericVector, NumericVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@pointgen#I#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S0_#"
+            }
+        ],
+        "file" : "D:/HDD User/Documents/Business/University/Master's/Project/Package/scr/src/scr.cpp",
+        "file_last_write" : 1491998713
+    }
+]
