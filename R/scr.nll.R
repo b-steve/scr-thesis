@@ -2,8 +2,8 @@
 #       Log-likelihood function       #
 #=====================================#
 #' @export
-scr.nll = function(pars, caps, traps, mask) {
-  scr_nll(pars, caps, traps, mask)
+scr.nll = function(pars, caps, traps, mask, maskDists) {
+  scr_nll(pars, caps, traps, mask, maskDists)
 }
 
 #==========================================================================#

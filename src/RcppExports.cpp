@@ -5,9 +5,21 @@
 
 using namespace Rcpp;
 
+// eucdist_nll
+NumericMatrix eucdist_nll(NumericMatrix points, NumericMatrix traplocations);
+RcppExport SEXP _scr_eucdist_nll(SEXP pointsSEXP, SEXP traplocationsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type points(pointsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type traplocations(traplocationsSEXP);
+    rcpp_result_gen = Rcpp::wrap(eucdist_nll(points, traplocations));
+    return rcpp_result_gen;
+END_RCPP
+}
 // scr_nll
-double scr_nll(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask);
-RcppExport SEXP _scr_scr_nll(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP) {
+double scr_nll(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists);
+RcppExport SEXP _scr_scr_nll(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -15,7 +27,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type caps(capsSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type traps(trapsSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type mask(maskSEXP);
-    rcpp_result_gen = Rcpp::wrap(scr_nll(pars, caps, traps, mask));
+    Rcpp::traits::input_parameter< NumericMatrix >::type maskDists(maskDistsSEXP);
+    rcpp_result_gen = Rcpp::wrap(scr_nll(pars, caps, traps, mask, maskDists));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -46,7 +59,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_scr_scr_nll", (DL_FUNC) &_scr_scr_nll, 4},
+    {"_scr_eucdist_nll", (DL_FUNC) &_scr_eucdist_nll, 2},
+    {"_scr_scr_nll", (DL_FUNC) &_scr_scr_nll, 5},
     {"_scr_eucdist", (DL_FUNC) &_scr_eucdist, 2},
     {"_scr_pointgen", (DL_FUNC) &_scr_pointgen, 3},
     {NULL, NULL, 0}

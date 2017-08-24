@@ -8,8 +8,7 @@ Description: Inferences relating to spatial capture-recapture count data.
     Can be used with package 'secr'.
     Use four spaces when indenting paragraphs within the Description.
 LinkingTo: 
-  Rcpp
-  secr
+    Rcpp
 Imports: 
 	Rcpp
 License: MIT

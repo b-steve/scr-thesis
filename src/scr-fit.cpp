@@ -11,7 +11,7 @@ using namespace Rcpp;
  * Returns a vector of distances.
  * - Not exported.
  */
-//// [[Rcpp::export]]
+// [[Rcpp::export]]
 NumericMatrix eucdist_nll(NumericMatrix points,
                           NumericMatrix traplocations) {
   NumericMatrix dists(points.nrow(), traplocations.nrow());
@@ -26,7 +26,33 @@ NumericMatrix eucdist_nll(NumericMatrix points,
 
 // =================================================================================== //
 // =================================================================================== //
+// ============================== //
+//              distr             //
+// ============================== //
+/*
+* Returns distribution function for a specified distribution
+* - Not exported.
+*/
+//// [[Rcpp::export]]
+/*
+double distr(String distribution,
+             double x,
+             double lambda,
+             double p,
+             double n) {
+  // Initialising the density value
+  double dens;
 
+  // Returning different densities based on `distr`
+  if(Rcpp::tolower(distribution) == "pois") {
+    dens = R::dpois(x, lambda, 1);
+  } else if(::tolower(distribution) == "bin") {
+    dens = R::dbinom(x, n, p, 1);
+  }
+
+  return dens;
+}
+*/
 // ============================== //
 //            scr_nll             //
 // ============================== //
@@ -38,7 +64,8 @@ NumericMatrix eucdist_nll(NumericMatrix points,
 double scr_nll(NumericVector pars,
                NumericMatrix caps,
                NumericMatrix traps,
-               NumericMatrix mask) {
+               NumericMatrix mask,
+               NumericMatrix maskDists) {
   // Storing/initialising (starting) parameter values.
   double D = exp(pars[0]);
   double g0 = 1 / (1 + exp(pars[1]));
@@ -57,7 +84,7 @@ double scr_nll(NumericVector pars,
    * Constructing distance matrix.
    * - Element (i, j) gives dist. b/w ith mask pint and jth trap.
    */
-  NumericMatrix maskDists = eucdist_nll(mask, traps);
+  //NumericMatrix maskDists = eucdist_nll(mask, traps);
 
   /*
    * Constructing a detection probability matrix.
@@ -124,6 +151,7 @@ double scr_nll(NumericVector pars,
 
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - n * log(sum(pDetected));
+
 
   return -logLik;
 }
