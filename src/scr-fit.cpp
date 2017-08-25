@@ -89,6 +89,7 @@ double scr_nll(NumericVector pars,
   /*
    * Constructing a detection probability matrix.
    * - Element (i, j) gives prob. of animal @ ith mask pt. being detected @ jth trap.
+   * - Line that fills in maskProbs(i, j) is the Hazard Half-Normal function (HHN)
    */
   NumericMatrix maskProbs(maskDists.nrow(), maskDists.ncol());
   for(int i = 0; i < maskDists.nrow(); i++) {

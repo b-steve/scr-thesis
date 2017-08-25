@@ -8,6 +8,7 @@ scr.sim = function(lambda_0, sigma, traplocs,
                    limits = list(xlim = NULL, ylim = NULL),
                    counts = "counts",
                    draw = FALSE,
+                   acoustic = FALSE,
                    ...) {
   ## Setting up the total survey area
   ##  - Survey area (vs. trap area) is based on extreme trap co-ordinates
@@ -32,6 +33,7 @@ scr.sim = function(lambda_0, sigma, traplocs,
   n = rpois(1, (density / 10000) * area)
   coords = pointgen(n, xlim = limits$xlim, ylim = limits$ylim)
 
+  ## Plotting the traps and activity centres, provided draw = TRUE
   if(draw) {
     ## Setting up the survey area
     plot.new()
@@ -47,6 +49,13 @@ scr.sim = function(lambda_0, sigma, traplocs,
     points(coords, ...)
   }
 
+  ## Acoustic captures
+  ## - Each animal has a matrix of captures - 1 per call
+  ##    - Obviously, if none of the "traps" captured a call, it isn't recorded
+  ## - Have some average # of calls (lambda_0)
+  ##    - Randomly generate (lambda_0) capture histories for each call
+
+
   ## Setting up the random count generation - depending on the distribution
   if(distr == "pois") {
     rDistr = paste0("r", distr, "(length(d), lambda_0 * exp(-d^2 / (2 * sigma^2)))")
@@ -57,19 +66,58 @@ scr.sim = function(lambda_0, sigma, traplocs,
     rDistr = paste0("r", "nbinom", "(length(d), mu = lambda_0 * exp(-d^2 / (2 * sigma^2)), size = size)")
   }
 
+  ## Calculating the distances between each activity centre and every trap, for efficiency.
+  distances = eucdist_nll(coords, traplocs)
+
   ## Filling the omega matrix row-by-row
   ##  - Counts are randomly generated based on the specified distribution
   ##  - A row will only be added if its sum > 0; i.e. if at least 1 of the traps had a detection.
   ##  - The simulated counts are removed at the end of each loop, just to keep things tidy.
-  omega = NULL
-  for(i in 1:nrow(coords)) {
-    d = eucdist(coords[i,], traplocs)
-    simCounts = eval(parse(text = rDistr))
-    if(sum(simCounts) != 0) {
+  ##
+  ## Acoustic and regular SCR are differentiated here
+  ## - If it's acoustic, then simCounts is repeated lambda_0 times and bound
+  omega = id = NULL
+  idIterator = 1
+  if(acoustic) {
+    idIterator = 1
+    for(i in 1:nrow(coords)) {
+      d = distances[i, ]
+      simCounts = t(replicate(lambda_0, eval(parse(text = rDistr))))
+
+      ## Dropping out the 0 counts
+      ## Also storing animal labels in a separate vector
+      ## - Label only added if counts > 1
+      simCounts = simCounts[as.logical(rowSums(simCounts)), ]
+      if(length(simCounts) / 9 > 0) {
+        ## Adding label
+        id = c(id, rep(idIterator, length(simCounts) / 9))
+
+        ## Keeping track of labels
+        idIterator = idIterator + 1
+      }
+
+      ## Binding the matrices to the "grand matrix"
       omega = rbind(omega,
                     simCounts)
+
+      ## Cleaning up
+      rm(simCounts)
     }
-    rm(simCounts)
+    omega = cbind(omega, id)
+  } else {
+    for(i in 1:nrow(coords)) {
+      d = distances[i, ]
+      simCounts = eval(parse(text = rDistr))
+
+      ## Dropping out the 0 counts
+      if(sum(simCounts) != 0) {
+        omega = rbind(omega,
+                      simCounts)
+      }
+
+      ## Cleaning up
+      rm(simCounts)
+    }
   }
 
   ## Removing the row names given as a result of rbind()

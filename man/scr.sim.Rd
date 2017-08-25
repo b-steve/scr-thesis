@@ -10,7 +10,8 @@ Randomly generates a spatial capture-recapture data set, and returns a matrix of
 \usage{
 scr.sim(lambda_0, sigma, traplocs, density = 50, distr = "pois",
     limits = list(xlim = NULL, ylim = NULL),
-    counts = c("count", "binary"), draw = FALSE, ...)
+    counts = c("count", "binary"), draw = FALSE,
+    acoustic = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -38,6 +39,9 @@ scr.sim(lambda_0, sigma, traplocs, density = 50, distr = "pois",
   \item{draw}{
     Plot the randomly generated points and traps. Default value is \code{FALSE}.
   }
+  \item{acoustic}{
+    Simulate acoustic capture histories. Default value is \code{FALSE}. See 'Details'.
+  }
   \item{...}{
 	  Further \link[graphics::par]{graphical parameters} may also be supplied as arguments.
   }
@@ -46,6 +50,8 @@ scr.sim(lambda_0, sigma, traplocs, density = 50, distr = "pois",
 Total number of points (animal activity centres) is randomly generated from a Poisson distribution: N ~ Pois(DA), where D = \code{dens}, and A = area (automatically calculated from the trap locations; \code{xlim}, \code{ylim} can be specified manually).
 
 Bounding box is calculated from the range given by the coordinates in \code{traplocs};points are randomly generated within this area, but not all points will be detected by the traps (depends on \code{sigma}).
+
+Acoustic capture histories contain 1 or more rows per 'call' detected by each trap. The final column of the capture history matrix identifies each animal.
 }
 \value{
 %%  ~Describe the value returned
