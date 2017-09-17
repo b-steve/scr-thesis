@@ -8,6 +8,7 @@ using namespace Rcpp;
  * Calculating the Euclidean distance between a point and each trap.
  * Returns a vector of distances.
  */
+/*
 // [[Rcpp::export]]
 NumericVector eucdist(NumericVector point,
                       NumericMatrix traplocations) {
@@ -17,7 +18,7 @@ NumericVector eucdist(NumericVector point,
   }
   return dists;
 }
-
+*/
 // =================================================================================== //
 // =================================================================================== //
 
@@ -68,35 +69,48 @@ NumericMatrix toCapthist_matrix(NumericMatrix captures) {
 // =================================================================================== //
 
 // ============================== //
-//          omega_fill            //
+//          omega_acoustic        //
 // ============================== //
 /*
-* Randomly generates points on the plotting/survey area.
-*  - Generates 50 random coordinates
-*  - Then combines them into an n x 2 matrix and returns
+ *
+ */
+
+
+// =================================================================================== //
+// =================================================================================== //
+
+// ============================== //
+//              rdistr            //
+// ============================== //
+/*
+*
 */
 /*
 // [[Rcpp::export]]
-SEXP omega_fill(String rDistr) {
+NumericVector rdistr(String distribution,
+              double lambda_0,
+              int n = 1,
+              double prob = NULL,
+              double mu = NULL,
+              double size = NULL) {
+  // Initialising result
+  NumericVector result;
 
-  ExpressionVector exp(rDistr);
-  Function f = exp.eval();
-  Rcpp::Environment glob =  Rcpp::Environment::global_env();
-  glob.assign( "foo" , f );
+  // String matching
+  if(distribution == "pois") {
+    result = rpois(n, lambda_0);
+  } else if(distribution == "binom") {
+    result = rbinom(n, 1, prob);
+  } else if(distribution == "nbinom") {
+    result = rnbinom(n, mu = lambda_0, size = size);
+  } else {
+    return 0;
+  }
 
+  return result;
 
-  return omega;
-}
-
-
-// [[Rcpp::export]]
-void fun(String distr){
-  ExpressionVector exp( distr ) ;
-  exp.parseEval();
-
-  //Rcpp::Environment glob =  Rcpp::Environment::global_env();
-  //glob.assign( "fun" , f );
 }
 */
+
 // =================================================================================== //
 // =================================================================================== //

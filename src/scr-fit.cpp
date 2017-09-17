@@ -26,33 +26,7 @@ NumericMatrix eucdist_nll(NumericMatrix points,
 
 // =================================================================================== //
 // =================================================================================== //
-// ============================== //
-//              distr             //
-// ============================== //
-/*
-* Returns distribution function for a specified distribution
-* - Not exported.
-*/
-//// [[Rcpp::export]]
-/*
-double distr(String distribution,
-             double x,
-             double lambda,
-             double p,
-             double n) {
-  // Initialising the density value
-  double dens;
 
-  // Returning different densities based on `distr`
-  if(Rcpp::tolower(distribution) == "pois") {
-    dens = R::dpois(x, lambda, 1);
-  } else if(::tolower(distribution) == "bin") {
-    dens = R::dbinom(x, n, p, 1);
-  }
-
-  return dens;
-}
-*/
 // ============================== //
 //            scr_nll             //
 // ============================== //

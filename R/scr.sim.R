@@ -9,6 +9,7 @@ scr.sim = function(lambda_0, sigma, traplocs,
                    counts = "counts",
                    draw = FALSE,
                    acoustic = FALSE,
+                   lambda_c = NULL,
                    ...) {
   ## Setting up the total survey area
   ##  - Survey area (vs. trap area) is based on extreme trap co-ordinates
@@ -28,7 +29,7 @@ scr.sim = function(lambda_0, sigma, traplocs,
   ## Generating random points on the area
   ##  - Area calculated from xlim and ylim
   ##  - Total number of animals N ~ Pois(DA)
-  ##    - Density (D)is given per hectare, so divide by 10,000 to get per metre
+  ##    - Density (D) is given per hectare, so divide by 10,000 to get per metre
   area = (limits$xlim[2] - limits$xlim[1]) * (limits$ylim[2] - limits$ylim[1])
   n = rpois(1, (density / 10000) * area)
   coords = pointgen(n, xlim = limits$xlim, ylim = limits$ylim)
@@ -52,9 +53,11 @@ scr.sim = function(lambda_0, sigma, traplocs,
   ## Acoustic captures
   ## - Each animal has a matrix of captures - 1 per call
   ##    - Obviously, if none of the "traps" captured a call, it isn't recorded
-  ## - Have some average # of calls (lambda_0)
-  ##    - Randomly generate (lambda_0) capture histories for each call
-
+  ## - Have some average # of calls (lambda_c)
+  ##    - Randomly generate (lambda_c) capture histories for each call
+  if(acoustic && is.null(lambda_c)) {
+    stop("Acoustic calls need a mean number of calls (lambda_c)")
+  }
 
   ## Setting up the random count generation - depending on the distribution
   if(distr == "pois") {
@@ -75,22 +78,31 @@ scr.sim = function(lambda_0, sigma, traplocs,
   ##  - The simulated counts are removed at the end of each loop, just to keep things tidy.
   ##
   ## Acoustic and regular SCR are differentiated here
-  ## - If it's acoustic, then simCounts is repeated lambda_0 times and bound
+  ## - If it's acoustic, then simCounts is repeated rpois(1, lambda_c) times and bound
+  ##    - Note that if rpois(1, lambda_c) == 0, then you need to generate it again
   omega = id = NULL
-  idIterator = 1
   if(acoustic) {
     idIterator = 1
     for(i in 1:nrow(coords)) {
       d = distances[i, ]
-      simCounts = t(replicate(lambda_0, eval(parse(text = rDistr))))
+
+      ## Generating a random number of calls
+      nCalls = rpois(1, lambda_c)
+      while(nCalls == 0) {
+        nCalls = rpois(1, lambda_c)
+      }
+
+      ## Generating [nCalls] detection vectors for a given animal's calls
+      simCounts = t(replicate(nCalls, eval(parse(text = rDistr))))
+      #parseEval(rDistr)))
 
       ## Dropping out the 0 counts
       ## Also storing animal labels in a separate vector
       ## - Label only added if counts > 1
       simCounts = simCounts[as.logical(rowSums(simCounts)), ]
-      if(length(simCounts) / 9 > 0) {
+      if(length(simCounts) / nrow(traplocs) > 0) {
         ## Adding label
-        id = c(id, rep(idIterator, length(simCounts) / 9))
+        id = c(id, rep(idIterator, length(simCounts) / nrow(traplocs)))
 
         ## Keeping track of labels
         idIterator = idIterator + 1
@@ -124,7 +136,8 @@ scr.sim = function(lambda_0, sigma, traplocs,
   rownames(omega) = NULL
 
   ## Converting the count data to binary, if the count type = "binary"
-  if(counts == "binary") {
+  ## Acoustic counts are also returned as binary
+  if(counts == "binary" | acoustic) {
     omega = ifelse(omega > 0, 1, 0)
   }
 

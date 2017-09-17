@@ -21,6 +21,9 @@ scr.fit(capthist, traps, mask, start = NULL)
   \item{mask}{
   Matrix of mask point coordinates.
   }
+  \item{start}{
+  Vector of starting values for the optimisation.
+  }
 }
 \details{
 Parameter estimates are obtained by maximising likelihood (via  \code{optim}).

@@ -32,18 +32,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// eucdist
-NumericVector eucdist(NumericVector point, NumericMatrix traplocations);
-RcppExport SEXP _scr_eucdist(SEXP pointSEXP, SEXP traplocationsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type point(pointSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type traplocations(traplocationsSEXP);
-    rcpp_result_gen = Rcpp::wrap(eucdist(point, traplocations));
-    return rcpp_result_gen;
-END_RCPP
-}
 // pointgen
 NumericMatrix pointgen(int n, NumericVector xlim, NumericVector ylim);
 RcppExport SEXP _scr_pointgen(SEXP nSEXP, SEXP xlimSEXP, SEXP ylimSEXP) {
@@ -61,7 +49,6 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_scr_eucdist_nll", (DL_FUNC) &_scr_eucdist_nll, 2},
     {"_scr_scr_nll", (DL_FUNC) &_scr_scr_nll, 5},
-    {"_scr_eucdist", (DL_FUNC) &_scr_eucdist, 2},
     {"_scr_pointgen", (DL_FUNC) &_scr_pointgen, 3},
     {NULL, NULL, 0}
 };

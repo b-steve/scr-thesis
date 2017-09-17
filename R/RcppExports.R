@@ -9,10 +9,6 @@ scr_nll <- function(pars, caps, traps, mask, maskDists) {
     .Call('_scr_scr_nll', PACKAGE = 'scr', pars, caps, traps, mask, maskDists)
 }
 
-eucdist <- function(point, traplocations) {
-    .Call('_scr_eucdist', PACKAGE = 'scr', point, traplocations)
-}
-
 pointgen <- function(n = 50L, xlim = as.numeric( c(0, 100)), ylim = as.numeric( c(0, 100))) {
     .Call('_scr_pointgen', PACKAGE = 'scr', n, xlim, ylim)
 }
