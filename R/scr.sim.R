@@ -115,7 +115,7 @@ scr.sim = function(lambda_0, sigma, traplocs,
       ## Cleaning up
       rm(simCounts)
     }
-    omega = cbind(omega, id)
+    #omega = cbind(omega, id)
   } else {
     for(i in 1:nrow(coords)) {
       d = distances[i, ]
@@ -137,8 +137,11 @@ scr.sim = function(lambda_0, sigma, traplocs,
 
   ## Converting the count data to binary, if the count type = "binary"
   ## Acoustic counts are also returned as binary
-  if(counts == "binary" | acoustic) {
+  if(distr == "binom") {
     omega = ifelse(omega > 0, 1, 0)
+  } else if(acoustic) {
+    omega = ifelse(omega > 0, 1, 0)
+    omega = cbind(omega, id)
   }
 
   omega

@@ -84,7 +84,10 @@ double scr_nll(NumericVector pars,
     }
   }
 
-  // Vector of probability of detection at each mask point.
+  /*
+   * Vector of probability of detection at each mask point.
+   * - Pc(s) in the acoustic form
+   */
   NumericVector pDetected = 1 - pAvoid;
 
   /*
@@ -133,4 +136,3 @@ double scr_nll(NumericVector pars,
 
 // =================================================================================== //
 // =================================================================================== //
-

@@ -5,6 +5,22 @@
 
 using namespace Rcpp;
 
+// scr_nll_acoustic
+double scr_nll_acoustic(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, NumericVector nCalls);
+RcppExport SEXP _scr_scr_nll_acoustic(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP nCallsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type pars(parsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type caps(capsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type traps(trapsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type mask(maskSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type maskDists(maskDistsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type nCalls(nCallsSEXP);
+    rcpp_result_gen = Rcpp::wrap(scr_nll_acoustic(pars, caps, traps, mask, maskDists, nCalls));
+    return rcpp_result_gen;
+END_RCPP
+}
 // eucdist_nll
 NumericMatrix eucdist_nll(NumericMatrix points, NumericMatrix traplocations);
 RcppExport SEXP _scr_eucdist_nll(SEXP pointsSEXP, SEXP traplocationsSEXP) {
@@ -47,6 +63,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_scr_scr_nll_acoustic", (DL_FUNC) &_scr_scr_nll_acoustic, 6},
     {"_scr_eucdist_nll", (DL_FUNC) &_scr_eucdist_nll, 2},
     {"_scr_scr_nll", (DL_FUNC) &_scr_scr_nll, 5},
     {"_scr_pointgen", (DL_FUNC) &_scr_pointgen, 3},
