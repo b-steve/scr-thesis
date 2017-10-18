@@ -21,7 +21,7 @@ scr.fit = function(capthist, traps, mask,
     start = c(log(start[1]),
             qlogis(start[2]),
             log(start[3]),
-            start[4])
+            log(start[4]))
   } else {
     start = c(log(start[1]),
               qlogis(start[2]),
@@ -51,13 +51,22 @@ scr.fit = function(capthist, traps, mask,
 
   ## Returning the fitted parameters in a named vector
   fittedPars = c(fit$par)
-  parNames = ifelse(acoustic,
-                    c("D", "g0", "sigma"),
-                    c("D", "lambda_0", "sigma"))
-  setNames(c(exp(fittedPars[1]),
-             plogis(fittedPars[2]),
-             exp(fittedPars[3])),
-           nm = parNames)
+  if(acoustic) {
+    parNames = c("D", "g0", "sigma", "lambda_c")
+
+    setNames(c(exp(fittedPars[1]),
+               plogis(fittedPars[2]),
+               exp(fittedPars[3]),
+               exp(fittedPars[4])),
+             nm = parNames)
+  } else {
+    parNames = c("D", "lambda_0", "sigma")
+
+    setNames(c(exp(fittedPars[1]),
+               plogis(fittedPars[2]),
+               exp(fittedPars[3])),
+             nm = parNames)
+  }
 }
 
 #==========================================================================#
