@@ -51,7 +51,7 @@ Total number of points (animal activity centres) is randomly generated from a Po
 
 Bounding box is calculated from the range given by the coordinates in \code{traplocs};points are randomly generated within this area, but not all points will be detected by the traps (depends on \code{sigma}).
 
-Acoustic capture histories contain 1 or more rows per 'call' detected by each trap. The final column of the capture history matrix identifies each animal.
+Acoustic capture histories contain 1 or more rows per 'call' detected by each trap. The final column of the capture history matrix identifies each animal. Requires \code{lambda_c} (mean number of calls per animal).
 }
 \value{
 %%  ~Describe the value returned

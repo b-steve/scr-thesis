@@ -5,7 +5,6 @@ using namespace Rcpp;
 // =================================================================================== //
 // =================================================================================== //
 
-
 // ============================== //
 //          Acoustic NLL          //
 // ============================== //
@@ -20,7 +19,10 @@ double scr_nll_acoustic(NumericVector pars,
                         NumericMatrix mask,
                         NumericMatrix maskDists,
                         NumericVector nCalls) {
-  // Storing/initialising (starting) parameter values.
+  /*
+   *  Storing/initialising (starting) parameter values.
+   *  - Note that parameters are back-transformed
+   */
   double D = exp(pars[0]);
   double g0 = 1 / (1 + exp(pars[1]));
   double sigma = exp(pars[2]);
@@ -131,7 +133,7 @@ double scr_nll_acoustic(NumericVector pars,
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - n * log(sum(pAnimal));
 
-
+  // Returning log-likelihood
   return -logLik;
 }
 // =================================================================================== //

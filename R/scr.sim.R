@@ -137,11 +137,11 @@ scr.sim = function(lambda_0, sigma, traplocs,
 
   ## Converting the count data to binary, if the count type = "binary"
   ## Acoustic counts are also returned as binary
-  if(distr == "binom") {
-    omega = ifelse(omega > 0, 1, 0)
-  } else if(acoustic) {
+  if(acoustic) {
     omega = ifelse(omega > 0, 1, 0)
     omega = cbind(omega, id)
+  } else if(distr == "binom") {
+    omega = ifelse(omega > 0, 1, 0)
   }
 
   omega

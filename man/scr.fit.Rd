@@ -8,7 +8,7 @@ Spatial Capture-Recapture
 Maximises likelihood and returns a set of parameter estimates, given a matrix of capture histories, trap locations, and mask points.
 }
 \usage{
-scr.fit(capthist, traps, mask, start = NULL)
+scr.fit(capthist, traps, mask, start = NULL, acoustic = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,9 +24,14 @@ scr.fit(capthist, traps, mask, start = NULL)
   \item{start}{
   Vector of starting values for the optimisation.
   }
+  \item{acoustic}{
+  Fit acoustic capture data. See 'Details'.
+  }
 }
 \details{
 Parameter estimates are obtained by maximising likelihood (via  \code{optim}).
+
+When fitting acoustic data, \code{capthist} matrices must contain column of 'animal IDs' as their last column.
 }
 \value{
 %%  ~Describe the value returned
