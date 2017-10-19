@@ -42,7 +42,7 @@ double scr_nll(NumericVector pars,
                NumericMatrix maskDists) {
   // Storing/initialising (starting) parameter values.
   double D = exp(pars[0]);
-  double g0 = 1 / (1 + exp(pars[1]));
+  double g0 = exp(pars[1]);//exp(pars[1]) / (1 + exp(pars[1]));
   double sigma = exp(pars[2]);
 
   // Number of animals detected.

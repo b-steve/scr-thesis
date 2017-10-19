@@ -24,14 +24,14 @@ double scr_nll_acoustic(NumericVector pars,
    *  - Note that parameters are back-transformed
    */
   double D = exp(pars[0]);
-  double g0 = 1 / (1 + exp(pars[1]));
+  double g0 = exp(pars[1]) / (1 + exp(pars[1]));
   double sigma = exp(pars[2]);
-  double lambda_c = pars[3];
+  double lambda_c = exp(pars[3]);
 
   // Number of animals
   int nAnimals = nCalls.size();
   // Number of calls detected in total.
-  int n = caps.nrow();
+  //int n = caps.nrow();
   // Number of traps. NB: NOT USED
   //int nTraps = traps.nrow();
   // Number of mask points.
@@ -83,7 +83,7 @@ double scr_nll_acoustic(NumericVector pars,
 
   // ========================================= //
   // ========================================= //
-  NumericVector fCapt(n);
+  NumericVector fCapt(nAnimals);
   // Probability for an animal being at each mask point
   NumericVector logfCapt_givenNS(nMask);
   NumericVector logfn_givenS(nMask);
@@ -128,10 +128,10 @@ double scr_nll_acoustic(NumericVector pars,
   double esa = area * sum(pAnimal);
 
   // Log-likelihood contribution from number of animals detected.
-  double logf_n = R::dpois(n, D * esa, 1);
+  double logf_n = R::dpois(nAnimals, D * esa, 1);
 
   // Overall log-likelihood.
-  double logLik = logf_n + logfCapt - n * log(sum(pAnimal));
+  double logLik = logf_n + logfCapt - nAnimals * log(sum(pAnimal));
 
   // Returning log-likelihood
   return -logLik;

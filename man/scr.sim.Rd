@@ -9,9 +9,8 @@ Randomly generates a spatial capture-recapture data set, and returns a matrix of
 }
 \usage{
 scr.sim(lambda_0, sigma, traplocs, density = 50, distr = "pois",
-    limits = list(xlim = NULL, ylim = NULL),
-    counts = c("count", "binary"), draw = FALSE,
-    acoustic = FALSE, ...)
+    limits = list(xlim = NULL, ylim = NULL), draw = FALSE,
+    acoustic = FALSE, lambda_c = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,14 +32,14 @@ scr.sim(lambda_0, sigma, traplocs, density = 50, distr = "pois",
   \item{limits}{
 	  List of length 2, giving x and y coordinates ranges. Default value is \code{NULL}; see 'Details'.
   }
-  \item{counts}{
-    Return matrix as counts, or as binary data.
-  }
   \item{draw}{
     Plot the randomly generated points and traps. Default value is \code{FALSE}.
   }
   \item{acoustic}{
     Simulate acoustic capture histories. Default value is \code{FALSE}. See 'Details'.
+  }
+  \item{lambda_c}{
+    Mean number of calls made, for acoustic capture data.
   }
   \item{...}{
 	  Further \link[graphics::par]{graphical parameters} may also be supplied as arguments.

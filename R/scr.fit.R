@@ -24,7 +24,7 @@ scr.fit = function(capthist, traps, mask,
             log(start[4]))
   } else {
     start = c(log(start[1]),
-              qlogis(start[2]),
+              log(start[2]),
               log(start[3]))
   }
 
@@ -63,7 +63,7 @@ scr.fit = function(capthist, traps, mask,
     parNames = c("D", "lambda_0", "sigma")
 
     setNames(c(exp(fittedPars[1]),
-               plogis(fittedPars[2]),
+               exp(fittedPars[2]),
                exp(fittedPars[3])),
              nm = parNames)
   }

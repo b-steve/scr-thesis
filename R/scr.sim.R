@@ -6,7 +6,6 @@ scr.sim = function(lambda_0, sigma, traplocs,
                    density = 50,
                    distr = "pois",
                    limits = list(xlim = NULL, ylim = NULL),
-                   counts = "counts",
                    draw = FALSE,
                    acoustic = FALSE,
                    lambda_c = NULL,
@@ -60,9 +59,9 @@ scr.sim = function(lambda_0, sigma, traplocs,
   }
 
   ## Setting up the random count generation - depending on the distribution
-  if(distr == "pois") {
+  if(distr == "pois" & acoustic == FALSE) {
     rDistr = paste0("r", distr, "(length(d), lambda_0 * exp(-d^2 / (2 * sigma^2)))")
-  } else if(distr == "bernoulli" | distr == "binom") {
+  } else if(distr == "bernoulli" | distr == "binom" | acoustic) {
     rDistr = paste0("r", "binom", "(length(d), 1, lambda_0 * exp(-d^2 / (2 * sigma^2)))")
   } else if(distr == "negbin" | distr == "nbinom") {
     ifelse(!is.null(list(...)$size), size <- list(...)$size, size <- 2)
@@ -138,7 +137,6 @@ scr.sim = function(lambda_0, sigma, traplocs,
   ## Converting the count data to binary, if the count type = "binary"
   ## Acoustic counts are also returned as binary
   if(acoustic) {
-    omega = ifelse(omega > 0, 1, 0)
     omega = cbind(omega, id)
   } else if(distr == "binom") {
     omega = ifelse(omega > 0, 1, 0)

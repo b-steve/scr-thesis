@@ -58,13 +58,18 @@ Callum Young
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-## Generating some random trap locations (in a grid).
-## Then running scr.sim() with lambda_0 = 5, sigma = 1.25
-traps = cbind(rep(seq(1, 9, length = 9), 3),
-             rep(seq(9, 1, length = 9), each = 9))
-traps = traps[sample(1:nrow(traps), (nrow(traps) * 1) / 5), ]
+## Loading in the example data (including trap and mask locations).
+data(scr.data)
 
-scr.sim(5, 1.25, traps)
+## Then running scr.sim() with lambda_0 = 5, sigma = 75, density = 2.
+capt = scr.sim(5, 75, scr.data$traps, density = 2)
+
+## Starting parameters are saved for use in the model fitting function.
+par.start = c(1, 1, 50)
+
+## Finally, fitting a model to the data,
+##  using the trap and mask points in the example data.
+scr.fit(capt, scr.data$traps, scr.data$mask)
 
 %%##---- Should be DIRECTLY executable !! ----
 %%##-- ==>  Define data, use random,
