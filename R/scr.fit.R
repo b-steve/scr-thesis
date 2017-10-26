@@ -17,15 +17,16 @@ scr.fit = function(capthist, traps, mask,
 
   ## Transforming the start values
   ## - Note that acoustic captures have one extra parameter (lambda_c)
+  ## - Machine minimum subtracted so as to avoid log errors
+  start = start - .Machine$double.xmin
   if(acoustic) {
     start = c(log(start[1]),
             qlogis(start[2]),
             log(start[3]),
             log(start[4]))
   } else {
-    start = c(log(start[1]),
-              log(start[2]),
-              log(start[3]))
+    ## 3 parameters, all logged
+    start = log(start)
   }
 
   ## Calculating mask distances before giving to optim
@@ -40,33 +41,49 @@ scr.fit = function(capthist, traps, mask,
                 caps = capthist,
                 traps = traps,
                 mask = mask,
-                maskDists = maskDists)
+                maskDists = maskDists,
+                hessian = TRUE)
   } else {
     fit = optim(start, scr.nll,
                 caps = capthist,
                 traps = traps,
                 mask = mask,
-                maskDists = maskDists)
+                maskDists = maskDists,
+                hessian = TRUE)
   }
 
   ## Returning the fitted parameters in a named vector
-  fittedPars = c(fit$par)
+  fittedPars = fit$par
   if(acoustic) {
     parNames = c("D", "g0", "sigma", "lambda_c")
 
-    setNames(c(exp(fittedPars[1]),
-               plogis(fittedPars[2]),
-               exp(fittedPars[3]),
-               exp(fittedPars[4])),
-             nm = parNames)
+    fittedPars = c(exp(fittedPars[1]),
+                   plogis(fittedPars[2]),
+                   exp(fittedPars[3]),
+                   exp(fittedPars[4]))
   } else {
     parNames = c("D", "lambda_0", "sigma")
 
-    setNames(c(exp(fittedPars[1]),
-               exp(fittedPars[2]),
-               exp(fittedPars[3])),
-             nm = parNames)
+    fittedPars = c(exp(fittedPars[1]),
+                   exp(fittedPars[2]),
+                   exp(fittedPars[3]))
   }
+
+  ## Calculating confidence intervals
+  ## - Using the (sqrt of) diagonals of (-ve) Hessian obtained from optim
+  ##    - i.e. Information matrix
+  ## - Wald CIs calculated by sapply() loop
+  ##    - Loops through each of fitted parameters and calculates lower/upper bounds
+  se = sqrt(diag(solve(fit$hess)))
+  waldCI = t(sapply(1:length(fittedPars),
+                    function(i) fittedPars[i] + (c(-1, 1) * (qnorm(0.975) * se[i]))))
+  waldCI = t(cbind(exp(waldCI[1, ]),
+                   plogis(waldCI[2, ]),
+                   exp(waldCI[3:nrow(waldCI), ])))
+
+  results = cbind(fittedPars, waldCI)
+  dimnames(results) = list(parNames, c("Estimate", "Lower", "Upper"))
+  results
 }
 
 #==========================================================================#
