@@ -52,8 +52,30 @@ scr.fit = function(capthist, traps, mask,
                 hessian = TRUE)
   }
 
-  ## Returning the fitted parameters in a named vector
+  ## Calculating confidence intervals
+  ## - Using the (sqrt of) diagonals of (-ve) Hessian obtained from optim
+  ##    - i.e. Information matrix
+  ## - Wald CIs calculated by sapply() loop
+  ##    - Loops through each of fitted parameters and calculates lower/upper bounds
+  ## Note: fitted pars must be on LINK scale
   fittedPars = fit$par
+  se = sqrt(diag(solve(fit$hess)))
+  waldCI = t(sapply(1:length(fittedPars),
+                    function(i) fittedPars[i] + (c(-1, 1) * (qnorm(0.975) * se[i]))))
+  waldCI = rbind(exp(waldCI[1, ]),
+                 plogis(waldCI[2, ]),
+                 exp(waldCI[3:length(fittedPars), ]))
+
+  ## Using the delta method to get the standard errors
+  ## - G = jacobian matrix of partial derivatives
+  G = diag(length(fittedPars)) * c(1 / fittedPars[1],
+                                   1 / (fittedPars[2] * (1 - fittedPars[2])),
+                                   1 / fittedPars[3:length(fittedPars)])
+  se = sqrt(diag(G %*% solve(fit$hessian) %*% t(G)))
+
+
+
+  ## Returning the fitted parameters in a named vector
   if(acoustic) {
     parNames = c("D", "g0", "sigma", "lambda_c")
 
@@ -69,20 +91,8 @@ scr.fit = function(capthist, traps, mask,
                    exp(fittedPars[3]))
   }
 
-  ## Calculating confidence intervals
-  ## - Using the (sqrt of) diagonals of (-ve) Hessian obtained from optim
-  ##    - i.e. Information matrix
-  ## - Wald CIs calculated by sapply() loop
-  ##    - Loops through each of fitted parameters and calculates lower/upper bounds
-  se = sqrt(diag(solve(fit$hess)))
-  waldCI = t(sapply(1:length(fittedPars),
-                    function(i) fittedPars[i] + (c(-1, 1) * (qnorm(0.975) * se[i]))))
-  waldCI = t(cbind(exp(waldCI[1, ]),
-                   plogis(waldCI[2, ]),
-                   exp(waldCI[3:nrow(waldCI), ])))
-
-  results = cbind(fittedPars, waldCI)
-  dimnames(results) = list(parNames, c("Estimate", "Lower", "Upper"))
+  results = cbind(fittedPars, se, waldCI)
+  dimnames(results) = list(parNames, c("Estimate", "SE", "Lower", "Upper"))
   results
 }
 

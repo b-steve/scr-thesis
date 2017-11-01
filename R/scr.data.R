@@ -16,5 +16,5 @@
 #'
 #' @examples
 #' data(scr.data)
-#' caps = scr.sim(5, 15, scr.data$traps)
+#' caps = scr.sim(5, 75, scr.data$traps)
 "scr.data"
