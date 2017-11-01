@@ -15,6 +15,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double scr_nll_acoustic(NumericVector pars,
                         NumericMatrix caps,
+			NumericMatrix toa_ssq,
                         NumericMatrix traps,
                         NumericMatrix mask,
                         NumericMatrix maskDists,
@@ -27,6 +28,7 @@ double scr_nll_acoustic(NumericVector pars,
   double g0 = exp(pars[1]) / (1 + exp(pars[1]));
   double sigma = exp(pars[2]);
   double lambda_c = exp(pars[3]);
+  double sigma_toa = exp(pars[4]);
 
   // Number of animals
   int nAnimals = nCalls.size();
@@ -96,6 +98,7 @@ double scr_nll_acoustic(NumericVector pars,
      * - Sub-matrix: all cols; first row of sub-mat --- nCalls - 1
      */
     NumericMatrix subCaps = caps(Range(subRow, subRow + nCalls[i] - 1), _);
+    NumericMatrix subtoas = toa_ssq(Range(subRow, subRow + nCalls[i] - 1), _);
     subRow += nCalls[i];
 
     // Looping through each mask point
@@ -105,7 +108,9 @@ double scr_nll_acoustic(NumericVector pars,
       // Looping through the calls (each sub-matrix)
       for (int k = 0; k < nCalls[i]; k++) {
         logfCapt_givenNS[j] = -log(pDetected[j] + DBL_MIN);
-
+	if (use_toa){
+	  logfCapt_givenNS[j] += (1 - n_dets(i))*log(sigma_toa) - (toa_ssq(i, j)/(2*pow(sigma_toa, 2)));
+	}
         // Looping through each trap
         for (int m = 0; m < traps.nrow(); m++) {
           logfCapt_givenNS[j] += R::dbinom(subCaps(k, m), 1, maskProbs(j, m), 1);
