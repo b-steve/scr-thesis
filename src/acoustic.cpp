@@ -9,23 +9,31 @@ using namespace Rcpp;
 //          Acoustic NLL          //
 // ============================== //
 /*
-* Calculating the Euclidean distance between a point and each trap.
-* Returns a vector of distances.
-*/
+ * Calculates the log-likelihood for cue-based (acoustic) SCR data
+ * - Arguments:
+ *    - pars:       Vector of (density, g0, sigma, lambda_c [, sigma_toa])
+ *    - caps:       Matrix of captures; last column is animal ID
+ *    - toa_ssq:    Matrix of times of arrival for each mask point
+ *    - mask:       Matrix of mask points (coordinates)
+ *    - maskDists:  Matrix of distances between each trap and mask point
+ *    - nCalls:     Vector of counts; number of calls by each animal ID
+ *    - use_toa:    TRUE/FALSE; whether TOA matrix is used
+ */
 // [[Rcpp::export]]
 double scr_nll_acoustic(NumericVector pars,
                         NumericMatrix caps,
-			NumericMatrix toa_ssq,
                         NumericMatrix traps,
                         NumericMatrix mask,
                         NumericMatrix maskDists,
-                        NumericVector nCalls) {
+                        NumericVector nCalls,
+                        NumericMatrix toa_ssq,
+                        bool use_toa) {
   /*
    *  Storing/initialising (starting) parameter values.
    *  - Note that parameters are back-transformed
    */
   double D = exp(pars[0]);
-  double g0 = exp(pars[1]) / (1 + exp(pars[1]));
+  double g0 = R::plogis(pars[2], 0, 1, 1, 0);//exp(pars[1]) / (1 + exp(pars[1]));
   double sigma = exp(pars[2]);
   double lambda_c = exp(pars[3]);
   double sigma_toa = exp(pars[4]);
@@ -89,16 +97,22 @@ double scr_nll_acoustic(NumericVector pars,
   // Probability for an animal being at each mask point
   NumericVector logfCapt_givenNS(nMask);
   NumericVector logfn_givenS(nMask);
+  // Row index for matrix subset
   double subRow = 0;
+  // Creating subTOAs (regardless of whether use_toa = T/F)
+  NumericMatrix subTOAs;
 
   // Looping through all animals
   for (int i = 0; i < nAnimals; i++) {
     /*
-     * Subsetting the capture matrix
-     * - Sub-matrix: all cols; first row of sub-mat --- nCalls - 1
+     * Subsetting the capture matrix and TOA matrix
+     * - Sub-matrices: all cols; first row of sub-mat --- nCalls - 1
+     * Note: TOA matrix is subset IFF use_toa = TRUE
      */
+    if(use_toa) {
+      subTOAs = toa_ssq(Range(subRow, subRow + nCalls[i] - 1), _);
+    }
     NumericMatrix subCaps = caps(Range(subRow, subRow + nCalls[i] - 1), _);
-    NumericMatrix subtoas = toa_ssq(Range(subRow, subRow + nCalls[i] - 1), _);
     subRow += nCalls[i];
 
     // Looping through each mask point
@@ -108,9 +122,17 @@ double scr_nll_acoustic(NumericVector pars,
       // Looping through the calls (each sub-matrix)
       for (int k = 0; k < nCalls[i]; k++) {
         logfCapt_givenNS[j] = -log(pDetected[j] + DBL_MIN);
-	if (use_toa){
-	  logfCapt_givenNS[j] += (1 - n_dets(i))*log(sigma_toa) - (toa_ssq(i, j)/(2*pow(sigma_toa, 2)));
-	}
+
+        /*
+         * Checking to see whether Time Of Arrival (TOA) has been specified
+         * - TRUE: adds to log-likelihood
+         * - FALSE: ignored
+         */
+        if (use_toa){
+          logfCapt_givenNS[j] += (1 - nCalls[i]) * log(sigma_toa) - (subTOAs(k, j) / (2 * pow(sigma_toa, 2)));
+        }
+
+
         // Looping through each trap
         for (int m = 0; m < traps.nrow(); m++) {
           logfCapt_givenNS[j] += R::dbinom(subCaps(k, m), 1, maskProbs(j, m), 1);
@@ -143,5 +165,3 @@ double scr_nll_acoustic(NumericVector pars,
 }
 // =================================================================================== //
 // =================================================================================== //
-
-

@@ -9,6 +9,9 @@ scr.sim = function(lambda_0, sigma, traplocs,
                    draw = FALSE,
                    acoustic = FALSE,
                    lambda_c = NULL,
+                   toa = FALSE,
+                   sigma_toa = NULL,
+                   c = 343,
                    ...) {
   ## Setting up the total survey area
   ##  - Survey area (vs. trap area) is based on extreme trap co-ordinates
@@ -142,7 +145,19 @@ scr.sim = function(lambda_0, sigma, traplocs,
     omega = ifelse(omega > 0, 1, 0)
   }
 
-  omega
+  ## Generating a time of arrival matrix
+  if(toa) {
+    coords
+  }
+
+  ## Returning the result
+  ## - Returns either omega matrix or list of omega matrix and times of arrival
+  if(toa) {
+    list("omega" = omega,
+         "toa" = toa)
+  } else {
+    omega
+  }
 }
 
 #==========================================================================#

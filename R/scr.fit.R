@@ -3,10 +3,16 @@
 #=====================================#
 #' @export
 scr.fit = function(capthist, traps, mask,
-                   start = NULL, acoustic = FALSE) {
+                   start = NULL, acoustic = FALSE,
+                   toa = NULL) {
   ## General error/exception handling
   if(length(start) == 4 && acoustic == FALSE) {
-    warning("Data treated as acoustic captures")
+    warning("Data treated as acoustic captures (4 start parameters)")
+  }
+  if(is.null(toa) && length(start) == 5) {
+    warning("Give time of arrival matrix")
+  } else if(!is.null(toa) && length(start) != 5) {
+    warning("Check time of arrival matrix has corresponding start parameter")
   }
 
   ## Checking to see if things need unpacking
@@ -16,17 +22,33 @@ scr.fit = function(capthist, traps, mask,
   }
 
   ## Transforming the start values
-  ## - Note that acoustic captures have one extra parameter (lambda_c)
+  ## - Note that:
+  ##      - acoustic captures have one extra parameter (lambda_c)
+  ##      - time of arrival (toa) has parameter sigma_toa
   ## - Machine minimum subtracted so as to avoid log errors
   start = start - .Machine$double.xmin
   if(acoustic) {
     start = c(log(start[1]),
             qlogis(start[2]),
-            log(start[3]),
-            log(start[4]))
+            log(start[3:length(start)]))
   } else {
     ## 3 parameters, all logged
+    ## - May have 4th parameter (sigma_toa)
     start = log(start)
+  }
+
+  ## Setting `use_toa` for the likelihood
+  ## - If the TOA matrix hasn't been provided:
+  ##    - use_toa = FALSE
+  ##    - toa (matrix in likelihood) set as dummy-matrix
+  ## - Otherwise:
+  ##    - use_toa = TRUE
+  ##    - toa given
+  if(is.null(toa)) {
+    use_toa = FALSE
+    toa = matrix()
+  } else {
+    use_toa = TRUE
   }
 
   ## Calculating mask distances before giving to optim
@@ -42,6 +64,8 @@ scr.fit = function(capthist, traps, mask,
                 traps = traps,
                 mask = mask,
                 maskDists = maskDists,
+                toa_ssq = toa,
+                use_toa = use_toa,
                 hessian = TRUE)
   } else {
     fit = optim(start, scr.nll,
@@ -58,37 +82,52 @@ scr.fit = function(capthist, traps, mask,
   ## - Wald CIs calculated by sapply() loop
   ##    - Loops through each of fitted parameters and calculates lower/upper bounds
   ## Note: fitted pars must be on LINK scale
+  ##     : if matrix is singular, none of the SEs or CIs are calculated (tryCatch statement)
   fittedPars = fit$par
-  se = sqrt(diag(solve(fit$hess)))
-  waldCI = t(sapply(1:length(fittedPars),
-                    function(i) fittedPars[i] + (c(-1, 1) * (qnorm(0.975) * se[i]))))
-  waldCI = rbind(exp(waldCI[1, ]),
-                 plogis(waldCI[2, ]),
-                 exp(waldCI[3:length(fittedPars), ]))
+  if(tryCatch(solve(fit$hess), error = function(e) TRUE)) {
+    ## Hessian is singular
+    warning("Warning: singular hessian")
+    ## SE and Wald CIs not calculated
+    se = NA
+    waldCI = matrix(NA, nrow = length(fittedPars), ncol = 2)
+    ## But columns still need to be returned (if/when simulations are run)
+    cnames = c("Estimate", "SE", "CI")
+  } else {
+    se = sqrt(diag(solve(fit$hess)))
+    waldCI = t(sapply(1:length(fittedPars),
+                      function(i) fittedPars[i] + (c(-1, 1) * (qnorm(0.975) * se[i]))))
+    waldCI = rbind(exp(waldCI[1, ]),
+                   plogis(waldCI[2, ]),
+                   exp(waldCI[3:length(fittedPars), ]))
 
-  ## Using the delta method to get the standard errors
-  ## - G = jacobian matrix of partial derivatives
-  G = diag(length(fittedPars)) * c(1 / fittedPars[1],
-                                   1 / (fittedPars[2] * (1 - fittedPars[2])),
-                                   1 / fittedPars[3:length(fittedPars)])
-  se = sqrt(diag(G %*% solve(fit$hessian) %*% t(G)))
-
+    ## Using the delta method to get the standard errors
+    ## - G = jacobian matrix of partial derivatives of back-transformed
+    ##    - i.e. log(D) -> exp(D) -- deriv. --> exp(D)
+    ##    - Note: 1st deriv of plogis (CDF) = dlogis (PDF)
+    G = diag(length(fittedPars)) * c(exp(fittedPars[1]),
+                                     dlogis(fittedPars[2]),
+                                     exp(fittedPars[3:length(fittedPars)]))
+    se = sqrt(diag(G %*% solve(fit$hessian) %*% t(G)))
+  }
 
 
   ## Returning the fitted parameters in a named vector
+  ## - First checks to see if TOA is being used,
+  ##    then inserts par names in front of "sigma_toa"
+  parNames = NULL
+  if(!is.null(toa)) {
+    parNames = "sigma_toa"
+  }
   if(acoustic) {
-    parNames = c("D", "g0", "sigma", "lambda_c")
+    parNames = c("D", "g0", "sigma", "lambda_c", parNames)
 
     fittedPars = c(exp(fittedPars[1]),
                    plogis(fittedPars[2]),
-                   exp(fittedPars[3]),
-                   exp(fittedPars[4]))
+                   exp(fittedPars[3:length(fittedPars)]))
   } else {
-    parNames = c("D", "lambda_0", "sigma")
+    parNames = c("D", "lambda_0", "sigma", parNames)
 
-    fittedPars = c(exp(fittedPars[1]),
-                   exp(fittedPars[2]),
-                   exp(fittedPars[3]))
+    fittedPars = exp(fittedPars)
   }
 
   results = cbind(fittedPars, se, waldCI)

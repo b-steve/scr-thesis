@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // scr_nll_acoustic
-double scr_nll_acoustic(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, NumericVector nCalls);
-RcppExport SEXP _scr_scr_nll_acoustic(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP nCallsSEXP) {
+double scr_nll_acoustic(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, NumericVector nCalls, NumericMatrix toa_ssq, bool use_toa);
+RcppExport SEXP _scr_scr_nll_acoustic(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP nCallsSEXP, SEXP toa_ssqSEXP, SEXP use_toaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -17,7 +17,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type mask(maskSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type maskDists(maskDistsSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type nCalls(nCallsSEXP);
-    rcpp_result_gen = Rcpp::wrap(scr_nll_acoustic(pars, caps, traps, mask, maskDists, nCalls));
+    Rcpp::traits::input_parameter< NumericMatrix >::type toa_ssq(toa_ssqSEXP);
+    Rcpp::traits::input_parameter< bool >::type use_toa(use_toaSEXP);
+    rcpp_result_gen = Rcpp::wrap(scr_nll_acoustic(pars, caps, traps, mask, maskDists, nCalls, toa_ssq, use_toa));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -61,12 +63,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// make_toa_ssq
+NumericMatrix make_toa_ssq(const NumericMatrix& capt, const NumericMatrix& dists, const double& sound_speed);
+RcppExport SEXP _scr_make_toa_ssq(SEXP captSEXP, SEXP distsSEXP, SEXP sound_speedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type capt(captSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type dists(distsSEXP);
+    Rcpp::traits::input_parameter< const double& >::type sound_speed(sound_speedSEXP);
+    rcpp_result_gen = Rcpp::wrap(make_toa_ssq(capt, dists, sound_speed));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_scr_scr_nll_acoustic", (DL_FUNC) &_scr_scr_nll_acoustic, 6},
+    {"_scr_scr_nll_acoustic", (DL_FUNC) &_scr_scr_nll_acoustic, 8},
     {"_scr_eucdist_nll", (DL_FUNC) &_scr_eucdist_nll, 2},
     {"_scr_scr_nll", (DL_FUNC) &_scr_scr_nll, 5},
     {"_scr_pointgen", (DL_FUNC) &_scr_pointgen, 3},
+    {"_scr_make_toa_ssq", (DL_FUNC) &_scr_make_toa_ssq, 3},
     {NULL, NULL, 0}
 };
 
