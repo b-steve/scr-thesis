@@ -82,7 +82,7 @@ scr.sim = function(lambda_0, sigma, traplocs,
   ## Acoustic and regular SCR are differentiated here
   ## - If it's acoustic, then simCounts is repeated rpois(1, lambda_c) times and bound
   ##    - Note that if rpois(1, lambda_c) == 0, then you need to generate it again
-  omega = id = NULL
+  omega = id = toa.mat = NULL
   if(acoustic) {
     idIterator = 1
     for(i in 1:nrow(coords)) {
@@ -108,6 +108,15 @@ scr.sim = function(lambda_0, sigma, traplocs,
 
         ## Keeping track of labels
         idIterator = idIterator + 1
+      }
+
+      ## Generating a "time of arrival" matrix
+      ## - [nrow(simCounts)] rows of times of arrival are generated
+      ## - TOA = (1 / [speed of sound]) * distance + error (sigma_toa)
+      if(toa && (length(simCounts) / nrow(traplocs) > 0)) {
+        toa.mat = rbind(toa.mat,
+                        t(replicate(length(simCounts) / nrow(traplocs),
+                                    (((1/c) * d) + rnorm(length(d), 0, 0.002)))) * simCounts)
       }
 
       ## Binding the matrices to the "grand matrix"
@@ -145,16 +154,11 @@ scr.sim = function(lambda_0, sigma, traplocs,
     omega = ifelse(omega > 0, 1, 0)
   }
 
-  ## Generating a time of arrival matrix
-  if(toa) {
-    coords
-  }
-
   ## Returning the result
   ## - Returns either omega matrix or list of omega matrix and times of arrival
   if(toa) {
     list("omega" = omega,
-         "toa" = toa)
+         "toa" = toa.mat)
   } else {
     omega
   }
