@@ -5,6 +5,17 @@
 
 using namespace Rcpp;
 
+// numNonZero
+int numNonZero(NumericVector x);
+RcppExport SEXP _scr_numNonZero(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(numNonZero(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // scr_nll_acoustic
 double scr_nll_acoustic(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, NumericVector nCalls, NumericMatrix toa_ssq, bool use_toa);
 RcppExport SEXP _scr_scr_nll_acoustic(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP nCallsSEXP, SEXP toa_ssqSEXP, SEXP use_toaSEXP) {
@@ -78,6 +89,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_scr_numNonZero", (DL_FUNC) &_scr_numNonZero, 1},
     {"_scr_scr_nll_acoustic", (DL_FUNC) &_scr_scr_nll_acoustic, 8},
     {"_scr_eucdist_nll", (DL_FUNC) &_scr_eucdist_nll, 2},
     {"_scr_scr_nll", (DL_FUNC) &_scr_scr_nll, 5},

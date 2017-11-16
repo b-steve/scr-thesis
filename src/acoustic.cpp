@@ -6,6 +6,28 @@ using namespace Rcpp;
 // =================================================================================== //
 
 // ============================== //
+//            numNonZero          //
+// ============================== //
+/*
+* Counts the number of non-zero elements in a vector
+* - Not exported.
+*/
+// [[Rcpp::export]]
+int numNonZero(NumericVector x) {
+  int count = 0;
+  for(int i = 0; i < x.length(); i++) {
+    if(x[i] > 0) {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+// =================================================================================== //
+// =================================================================================== //
+
+// ============================== //
 //          Acoustic NLL          //
 // ============================== //
 /*
@@ -101,6 +123,8 @@ double scr_nll_acoustic(NumericVector pars,
   double subRow = 0;
   // Creating subTOAs (regardless of whether use_toa = T/F)
   NumericMatrix subTOAs;
+  // Number of traps that detected a call (i.e. non-zero elements in a given row of the sub-matrix)
+  NumericVector trapsHeard;
 
   // Looping through all animals
   for (int i = 0; i < nAnimals; i++) {
@@ -129,7 +153,7 @@ double scr_nll_acoustic(NumericVector pars,
          * - FALSE: ignored
          */
         if (use_toa){
-          logfCapt_givenNS[j] += (1 - nCalls[i]) * log(sigma_toa) - (subTOAs(k, j) / (2 * pow(sigma_toa, 2)));
+          logfCapt_givenNS[j] += (1 - numNonZero(subTOAs(k, _))) * log(sigma_toa) - (subTOAs(k, j) / (2 * pow(sigma_toa, 2)));
         }
 
 

@@ -44,7 +44,7 @@ scr.fit = function(capthist, traps, mask,
   ## - Otherwise:
   ##    - use_toa = TRUE
   ##    - toa given
-  if(is.null(toa)) {
+  if(is.null(toa) || toa == FALSE) {
     use_toa = FALSE
     toa = matrix()
   } else {
@@ -91,7 +91,7 @@ scr.fit = function(capthist, traps, mask,
     se = NA
     waldCI = matrix(NA, nrow = length(fittedPars), ncol = 2)
     ## But columns still need to be returned (if/when simulations are run)
-    cnames = c("Estimate", "SE", "CI")
+    cnames = c("Estimate", "SE", "Lower", "Upper")
   } else {
     se = sqrt(diag(solve(fit$hess)))
     waldCI = t(sapply(1:length(fittedPars),
@@ -115,7 +115,7 @@ scr.fit = function(capthist, traps, mask,
   ## - First checks to see if TOA is being used,
   ##    then inserts par names in front of "sigma_toa"
   parNames = NULL
-  if(!is.null(toa)) {
+  if(!(is.null(toa) || is.na(toa))) {
     parNames = "sigma_toa"
   }
   if(acoustic) {
