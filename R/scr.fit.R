@@ -44,7 +44,7 @@ scr.fit = function(capthist, traps, mask,
   ## - Otherwise:
   ##    - use_toa = TRUE
   ##    - toa given
-  if(is.null(toa) || toa == FALSE) {
+  if(is.null(toa)){## || toa == FALSE) {
     use_toa = FALSE
     toa = matrix()
   } else {
@@ -84,7 +84,7 @@ scr.fit = function(capthist, traps, mask,
   ## Note: fitted pars must be on LINK scale
   ##     : if matrix is singular, none of the SEs or CIs are calculated (tryCatch statement)
   fittedPars = fit$par
-  if(tryCatch(solve(fit$hess), error = function(e) TRUE)) {
+  if(inherits(try(solve(fit$hessian), silent = TRUE), "try-error")) {
     ## Hessian is singular
     warning("Warning: singular hessian")
     ## SE and Wald CIs not calculated

@@ -53,12 +53,12 @@ double scr_nll_acoustic(NumericVector pars,
   /*
    *  Storing/initialising (starting) parameter values.
    *  - Note that parameters are back-transformed
+   *  - Also note that if use_toa = FALSE, there will be no sigma_toa to estimate
    */
   double D = exp(pars[0]);
-  double g0 = R::plogis(pars[2], 0, 1, 1, 0);//exp(pars[1]) / (1 + exp(pars[1]));
+  double g0 = R::plogis(pars[1], 0, 1, 1, 0);//exp(pars[1]) / (1 + exp(pars[1]));
   double sigma = exp(pars[2]);
   double lambda_c = exp(pars[3]);
-  double sigma_toa = exp(pars[4]);
 
   // Number of animals
   int nAnimals = nCalls.size();
@@ -124,7 +124,7 @@ double scr_nll_acoustic(NumericVector pars,
   // Creating subTOAs (regardless of whether use_toa = T/F)
   NumericMatrix subTOAs;
   // Number of traps that detected a call (i.e. non-zero elements in a given row of the sub-matrix)
-  NumericVector trapsHeard;
+  //int trapsHeard; - NOW FOUND VIA numNonZero()
 
   // Looping through all animals
   for (int i = 0; i < nAnimals; i++) {
@@ -153,9 +153,9 @@ double scr_nll_acoustic(NumericVector pars,
          * - FALSE: ignored
          */
         if (use_toa){
-          logfCapt_givenNS[j] += (1 - numNonZero(subTOAs(k, _))) * log(sigma_toa) - (subTOAs(k, j) / (2 * pow(sigma_toa, 2)));
+          double sigma_toa = exp(pars[4]);
+          logfCapt_givenNS[j] += ((1 - numNonZero(subTOAs(k, _))) * log(sigma_toa)) - (subTOAs(k, j) / (2 * pow(sigma_toa, 2)));
         }
-
 
         // Looping through each trap
         for (int m = 0; m < traps.nrow(); m++) {
@@ -183,6 +183,8 @@ double scr_nll_acoustic(NumericVector pars,
 
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - nAnimals * log(sum(pAnimal));
+
+  Rcout << "=";
 
   // Returning log-likelihood
   return -logLik;

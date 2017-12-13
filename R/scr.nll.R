@@ -14,14 +14,14 @@ scr.nll = function(pars, caps, traps, mask, maskDists) {
 #=====================================#
 #' @export
 scr.nll.acoustic = function(pars, caps, traps, mask, maskDists, toa_ssq, use_toa) {
-  scr_nll_acoustic(pars,
-                   caps[, -ncol(caps)],
-                   traps,
-                   mask,
-                   maskDists,
-                   table(caps[, ncol(caps)]),
-                   toa_ssq,
-                   use_toa)
+  scr_nll_acoustic(pars = pars,
+                   caps = caps[, -ncol(caps)],
+                   traps = traps,
+                   mask = mask,
+                   maskDists = maskDists,
+                   nCalls = table(caps[, ncol(caps)]),
+                   toa_ssq = toa_ssq,
+                   use_toa = use_toa)
 }
 
 #==========================================================================#
