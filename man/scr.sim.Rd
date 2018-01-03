@@ -82,7 +82,11 @@ traps = cbind(rep(seq(1, 9, length = 9), 3),
              rep(seq(9, 1, length = 9), each = 9))
 traps = traps[sample(1:nrow(traps), (nrow(traps) * 1) / 5), ]
 
-scr.sim(5, 1.25, traps)
+scr.sim(5, 15, scr.data$traps)
+
+## Acoustic simulation
+## Note that for acoustic captures, 0 < lambda_0 < 1
+scr.sim(1, 10, scr.data$traps, acoustic = TRUE, lambda_c = 3)
 
 %%##---- Should be DIRECTLY executable !! ----
 %%##-- ==>  Define data, use random,
