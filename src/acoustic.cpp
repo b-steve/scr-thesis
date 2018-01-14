@@ -155,6 +155,9 @@ double scr_nll_acoustic(NumericVector pars,
         if (use_toa){
           double sigma_toa = exp(pars[4]);
           logfCapt_givenNS[j] += ((1 - numNonZero(subTOAs(k, _))) * log(sigma_toa)) - (subTOAs(k, j) / (2 * pow(sigma_toa, 2)));
+          if(R_IsNaN(subTOAs(k, j))) {
+            Rcout << "(" << subTOAs.nrow() << ", " << subTOAs.ncol() << ") : (" << k << ", " << j << ") | ";
+          }
         }
 
         // Looping through each trap
@@ -183,8 +186,6 @@ double scr_nll_acoustic(NumericVector pars,
 
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - nAnimals * log(sum(pAnimal));
-
-  Rcout << "=";
 
   // Returning log-likelihood
   return -logLik;

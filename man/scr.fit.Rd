@@ -27,11 +27,19 @@ scr.fit(capthist, traps, mask, start = NULL, acoustic = FALSE)
   \item{acoustic}{
   Fit acoustic capture data. See 'Details'.
   }
+  \item{toa}{
+  Time of arrival matrix. See 'Details'.
+  }
+  \item{speed_sound}{
+  Speed of sound. Default is 330(m/s).
+  }
 }
 \details{
 Parameter estimates are obtained by maximising likelihood (via  \code{optim}).
 
-When fitting acoustic data, \code{capthist} matrices must contain column of 'animal IDs' as their last column.
+When fitting cue-based (e.g. acoustic) data, \code{capthist} matrices must contain column of 'animal IDs' as their last column.
+
+Time of arrival matrix has the same dimensions as the capture history matrix. Each entry is now the time elapsed between the beginning of recording, and a detection. Inclusion of this matrix requires an extra parameter appended to \code{start}.
 }
 \value{
 %%  ~Describe the value returned

@@ -130,7 +130,6 @@ double scr_nll(NumericVector pars,
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - n * log(sum(pDetected));
 
-
   return -logLik;
 }
 

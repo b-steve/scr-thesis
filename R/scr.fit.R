@@ -4,7 +4,7 @@
 #' @export
 scr.fit = function(capthist, traps, mask,
                    start = NULL, acoustic = FALSE,
-                   toa = NULL) {
+                   toa = NULL, speed_sound = 330) {
   ## General error/exception handling
   if(length(start) == 4 && acoustic == FALSE) {
     warning("Data treated as acoustic captures (4 start parameters)")
@@ -37,6 +37,11 @@ scr.fit = function(capthist, traps, mask,
     start = log(start)
   }
 
+
+  ## Calculating mask distances before giving to optim
+  ## - More efficient
+  maskDists = eucdist_nll(mask, traps)
+
   ## Setting `use_toa` for the likelihood
   ## - If the TOA matrix hasn't been provided:
   ##    - use_toa = FALSE
@@ -46,14 +51,14 @@ scr.fit = function(capthist, traps, mask,
   ##    - toa given
   if(is.null(toa)){## || toa == FALSE) {
     use_toa = FALSE
-    toa = matrix()
+    toa_ssq = matrix()
   } else {
     use_toa = TRUE
-  }
 
-  ## Calculating mask distances before giving to optim
-  ## - More efficient
-  maskDists = eucdist_nll(mask, traps)
+    ## Calculating the sums of squares of TOA
+    ## - Note: call to eucdist_nll has arguments reversed c.f. maskDists.
+    toa_ssq = make_toa_ssq(toa, eucdist_nll(traps, mask), speed_sound)
+  }
 
   ## Taking the capthist, traps, and mask and maximising likelihood
   ## - Note that likelihood function changes for acoustic
@@ -64,7 +69,7 @@ scr.fit = function(capthist, traps, mask,
                 traps = traps,
                 mask = mask,
                 maskDists = maskDists,
-                toa_ssq = toa,
+                toa_ssq = toa_ssq,
                 use_toa = use_toa,
                 hessian = TRUE)
   } else {
