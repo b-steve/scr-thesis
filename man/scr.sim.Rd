@@ -8,7 +8,7 @@ Simulate Capture Data
 Randomly generates a spatial capture-recapture data set, and returns a matrix of encounter rates for each animal at each trap (omega).
 }
 \usage{
-scr.sim(lambda_0, sigma, traplocs, density = 50,
+scr.sim(lambda_0, sigma, traps, density = 50,
     distr = c("pois", "binom", "nbinom"),
     limits = list(xlim = NULL, ylim = NULL), draw = FALSE,
     acoustic = FALSE, lambda_c = NULL, ...)
@@ -21,7 +21,7 @@ scr.sim(lambda_0, sigma, traplocs, density = 50,
   \item{sigma}{
     Rate of decay of encounter rates (as distance between trap and animal activity centre increases).
   }
-  \item{traplocs}{
+  \item{traps}{
     Matrix of trap location coordinates.
   }
   \item{density}{
@@ -58,7 +58,7 @@ scr.sim(lambda_0, sigma, traplocs, density = 50,
 \details{
 Total number of points (animal activity centres) is randomly generated from a Poisson distribution: N ~ Pois(DA), where D = \code{dens}, and A = area (automatically calculated from the trap locations; \code{xlim}, \code{ylim} can be specified manually).
 
-Bounding box is calculated from the range given by the coordinates in \code{traplocs};points are randomly generated within this area, but not all points will be detected by the traps (depends on \code{sigma}).
+Bounding box is calculated from the range given by the coordinates in \code{traps}; points are randomly generated within this area, but not all points will be detected by the traps (depends on \code{sigma}).
 
 Size parameter should be supplied when \code{distr = nbinom}, otherwise default is 2.
 
@@ -88,12 +88,8 @@ Callum Young
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-## Generating some random trap locations (in a grid).
-## Then running scr.sim() with lambda_0 = 5, sigma = 1.25
-traps = cbind(rep(seq(1, 9, length = 9), 3),
-             rep(seq(9, 1, length = 9), each = 9))
-traps = traps[sample(1:nrow(traps), (nrow(traps) * 1) / 5), ]
-
+## Simulating with lambda_0 = 5, sigma = 15
+## Trap locations are stored in data(scr.data)
 scr.sim(5, 15, scr.data$traps)
 
 ## Acoustic simulation

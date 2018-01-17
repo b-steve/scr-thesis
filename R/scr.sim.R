@@ -2,7 +2,7 @@
 #      Main simulation function       #
 #=====================================#
 #' @export
-scr.sim = function(lambda_0, sigma, traplocs,
+scr.sim = function(lambda_0, sigma, traps,
                    density = 50,
                    distr = "pois",
                    limits = list(xlim = NULL, ylim = NULL),
@@ -19,8 +19,8 @@ scr.sim = function(lambda_0, sigma, traplocs,
   ##    - Co-ordinates are extended by (5 * sigma); stored as survey area box
   ##  - Then some error handling (i.e. only x or only y coordinates missing)
   if(is.null(limits$xlim) & is.null(limits$ylim)) {
-    limits = list(xlim = range(traplocs[, 1], na.rm = TRUE),
-                  ylim = range(traplocs[, 2], na.rm = TRUE))
+    limits = list(xlim = range(traps[, 1], na.rm = TRUE),
+                  ylim = range(traps[, 2], na.rm = TRUE))
     limits = lapply(limits, "+", c(-1, 1) * (5 * sigma))
   } else if(is.null(limits$xlim) & !is.null(limits$ylim)) {
     stop("X co-ordinates missing")
@@ -46,7 +46,7 @@ scr.sim = function(lambda_0, sigma, traplocs,
     box()
 
     ## Setting up the traps
-    points(traplocs, pch = 3, col = "red")
+    points(traps, pch = 3, col = "red")
 
     ## Plotting the activity centres
     points(coords, ...)
@@ -73,7 +73,7 @@ scr.sim = function(lambda_0, sigma, traplocs,
 
   ## Calculating the distances between each activity centre and every trap
   ## - Distances are only calculated once; more efficient than calculating it in the C++ files.
-  distances = eucdist_nll(coords, traplocs)
+  distances = eucdist_nll(coords, traps)
 
   ## Filling the omega matrix row-by-row
   ##  - Counts are randomly generated based on the specified distribution
@@ -103,9 +103,9 @@ scr.sim = function(lambda_0, sigma, traplocs,
       ## Also storing animal labels in a separate vector
       ## - Label only added if counts > 1
       simCounts = simCounts[as.logical(rowSums(simCounts)), ]
-      if(length(simCounts) / nrow(traplocs) > 0) {
+      if(length(simCounts) / nrow(traps) > 0) {
         ## Adding label
-        id = c(id, rep(idIterator, length(simCounts) / nrow(traplocs)))
+        id = c(id, rep(idIterator, length(simCounts) / nrow(traps)))
 
         ## Keeping track of labels
         idIterator = idIterator + 1
@@ -114,9 +114,9 @@ scr.sim = function(lambda_0, sigma, traplocs,
       ## Generating a "time of arrival" matrix
       ## - [nrow(simCounts)] rows of times of arrival are generated
       ## - TOA = (1 / [speed of sound]) * distance + error (sigma_toa)
-      if(toa && (length(simCounts) / nrow(traplocs) > 0)) {
+      if(toa && (length(simCounts) / nrow(traps) > 0)) {
         toa.mat = rbind(toa.mat,
-                        t(replicate(length(simCounts) / nrow(traplocs),
+                        t(replicate(length(simCounts) / nrow(traps),
                                     (((1/speed_sound) * d) + rnorm(length(d), 0, sigma_toa)))) * simCounts)
       }
 
