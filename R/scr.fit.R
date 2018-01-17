@@ -88,7 +88,7 @@ scr.fit = function(capthist, traps, mask,
   ## - Wald CIs calculated by sapply() loop
   ##    - Loops through each of fitted parameters and calculates lower/upper bounds
   ## Note: fitted pars must be on LINK scale
-  ##     : if matrix is singular, none of the SEs or CIs are calculated (tryCatch statement)
+  ##     : if matrix is singular, none of the SEs or CIs are calculated (inherits/try statement)
   fittedPars = fit$par
   if(inherits(try(solve(fit$hessian), silent = TRUE), "try-error")) {
     ## Hessian is singular

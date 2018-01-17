@@ -151,9 +151,10 @@ scr.sim = function(lambda_0, sigma, traplocs,
   ## Acoustic counts are also returned as binary
   if(acoustic) {
     omega = cbind(omega, id)
-  } else if(distr == "binom") {
-    omega = ifelse(omega > 0, 1, 0)
-  }
+  } #else if(distr == "binom") {
+## THIS IS REDUNDANT
+   # omega = ifelse(omega > 0, 1, 0)
+  #}
 
   ## Returning the result
   ## - Returns either omega matrix or list of omega matrix and times of arrival
