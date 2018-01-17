@@ -10,8 +10,8 @@ scr.sim = function(lambda_0, sigma, traplocs,
                    acoustic = FALSE,
                    lambda_c = NULL,
                    toa = FALSE,
-                   sigma_toa = NULL,
-                   c = 343,
+                   sigma_toa = 0.002,
+                   speed_sound = 343,
                    ...) {
   ## Setting up the total survey area
   ##  - Survey area (vs. trap area) is based on extreme trap co-ordinates
@@ -71,7 +71,8 @@ scr.sim = function(lambda_0, sigma, traplocs,
     rDistr = paste0("r", "nbinom", "(length(d), mu = lambda_0 * exp(-d^2 / (2 * sigma^2)), size = size)")
   }
 
-  ## Calculating the distances between each activity centre and every trap, for efficiency.
+  ## Calculating the distances between each activity centre and every trap
+  ## - Distances are only calculated once; more efficient than calculating it in the C++ files.
   distances = eucdist_nll(coords, traplocs)
 
   ## Filling the omega matrix row-by-row
@@ -116,7 +117,7 @@ scr.sim = function(lambda_0, sigma, traplocs,
       if(toa && (length(simCounts) / nrow(traplocs) > 0)) {
         toa.mat = rbind(toa.mat,
                         t(replicate(length(simCounts) / nrow(traplocs),
-                                    (((1/c) * d) + rnorm(length(d), 0, 0.002)))) * simCounts)
+                                    (((1/speed_sound) * d) + rnorm(length(d), 0, sigma_toa)))) * simCounts)
       }
 
       ## Binding the matrices to the "grand matrix"

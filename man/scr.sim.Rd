@@ -8,7 +8,8 @@ Simulate Capture Data
 Randomly generates a spatial capture-recapture data set, and returns a matrix of encounter rates for each animal at each trap (omega).
 }
 \usage{
-scr.sim(lambda_0, sigma, traplocs, density = 50, distr = "pois",
+scr.sim(lambda_0, sigma, traplocs, density = 50,
+    distr = c("pois", "binom", "nbinom"),
     limits = list(xlim = NULL, ylim = NULL), draw = FALSE,
     acoustic = FALSE, lambda_c = NULL, ...)
 }
@@ -27,7 +28,7 @@ scr.sim(lambda_0, sigma, traplocs, density = 50, distr = "pois",
 	  Point (animal) density in animals per hectare. Default value is 50.
   }
   \item{distr}{
-    Distribution of count data (for each trap) to be simulated. Default is Poisson.
+    Distribution of count data (for each trap) to be simulated. Default is Poisson; see 'Details'.
   }
   \item{limits}{
 	  List of length 2, giving x and y coordinates ranges. Default value is \code{NULL}; see 'Details'.
@@ -41,6 +42,15 @@ scr.sim(lambda_0, sigma, traplocs, density = 50, distr = "pois",
   \item{lambda_c}{
     Mean number of calls made, for acoustic capture data.
   }
+  \item{toa}{
+    Logical; simulate a time of arrival matrix.
+  }
+  \item{sigma_toa}{
+    Error in recording time. Default value is 0.002.
+  }
+  \item{speed_sound}{
+    Speed of sound. Default is 343(m/s).
+  }
   \item{...}{
 	  Further \link[graphics::par]{graphical parameters} may also be supplied as arguments.
   }
@@ -49,6 +59,8 @@ scr.sim(lambda_0, sigma, traplocs, density = 50, distr = "pois",
 Total number of points (animal activity centres) is randomly generated from a Poisson distribution: N ~ Pois(DA), where D = \code{dens}, and A = area (automatically calculated from the trap locations; \code{xlim}, \code{ylim} can be specified manually).
 
 Bounding box is calculated from the range given by the coordinates in \code{traplocs};points are randomly generated within this area, but not all points will be detected by the traps (depends on \code{sigma}).
+
+Size parameter should be supplied when \code{distr = nbinom}, otherwise default is 2.
 
 Acoustic capture histories contain 1 or more rows per 'call' detected by each trap. The final column of the capture history matrix identifies each animal. Requires \code{lambda_c} (mean number of calls per animal).
 }

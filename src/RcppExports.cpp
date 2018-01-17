@@ -17,8 +17,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // scr_nll_acoustic
-double scr_nll_acoustic(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, NumericVector nCalls, NumericMatrix toa_ssq, bool use_toa);
-RcppExport SEXP _scr_scr_nll_acoustic(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP nCallsSEXP, SEXP toa_ssqSEXP, SEXP use_toaSEXP) {
+double scr_nll_acoustic(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, NumericVector nCalls, NumericMatrix toa, NumericMatrix toa_ssq, bool use_toa);
+RcppExport SEXP _scr_scr_nll_acoustic(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP nCallsSEXP, SEXP toaSEXP, SEXP toa_ssqSEXP, SEXP use_toaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -28,9 +28,10 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type mask(maskSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type maskDists(maskDistsSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type nCalls(nCallsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type toa(toaSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type toa_ssq(toa_ssqSEXP);
     Rcpp::traits::input_parameter< bool >::type use_toa(use_toaSEXP);
-    rcpp_result_gen = Rcpp::wrap(scr_nll_acoustic(pars, caps, traps, mask, maskDists, nCalls, toa_ssq, use_toa));
+    rcpp_result_gen = Rcpp::wrap(scr_nll_acoustic(pars, caps, traps, mask, maskDists, nCalls, toa, toa_ssq, use_toa));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -90,7 +91,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_scr_numNonZero", (DL_FUNC) &_scr_numNonZero, 1},
-    {"_scr_scr_nll_acoustic", (DL_FUNC) &_scr_scr_nll_acoustic, 8},
+    {"_scr_scr_nll_acoustic", (DL_FUNC) &_scr_scr_nll_acoustic, 9},
     {"_scr_eucdist_nll", (DL_FUNC) &_scr_eucdist_nll, 2},
     {"_scr_scr_nll", (DL_FUNC) &_scr_scr_nll, 5},
     {"_scr_pointgen", (DL_FUNC) &_scr_pointgen, 3},

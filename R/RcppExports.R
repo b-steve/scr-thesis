@@ -5,8 +5,8 @@ numNonZero <- function(x) {
     .Call('_scr_numNonZero', PACKAGE = 'scr', x)
 }
 
-scr_nll_acoustic <- function(pars, caps, traps, mask, maskDists, nCalls, toa_ssq, use_toa) {
-    .Call('_scr_scr_nll_acoustic', PACKAGE = 'scr', pars, caps, traps, mask, maskDists, nCalls, toa_ssq, use_toa)
+scr_nll_acoustic <- function(pars, caps, traps, mask, maskDists, nCalls, toa, toa_ssq, use_toa) {
+    .Call('_scr_scr_nll_acoustic', PACKAGE = 'scr', pars, caps, traps, mask, maskDists, nCalls, toa, toa_ssq, use_toa)
 }
 
 eucdist_nll <- function(points, traplocations) {

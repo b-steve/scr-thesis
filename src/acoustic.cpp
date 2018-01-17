@@ -48,6 +48,7 @@ double scr_nll_acoustic(NumericVector pars,
                         NumericMatrix mask,
                         NumericMatrix maskDists,
                         NumericVector nCalls,
+                        NumericMatrix toa,
                         NumericMatrix toa_ssq,
                         bool use_toa) {
   /*
@@ -122,7 +123,8 @@ double scr_nll_acoustic(NumericVector pars,
   // Row index for matrix subset
   double subRow = 0;
   // Creating subTOAs (regardless of whether use_toa = T/F)
-  NumericMatrix subTOAs;
+  NumericMatrix subTOAs_raw;
+  NumericMatrix subTOAs_ssq;
   // Number of traps that detected a call (i.e. non-zero elements in a given row of the sub-matrix)
   //int trapsHeard; - NOW FOUND VIA numNonZero()
 
@@ -134,7 +136,8 @@ double scr_nll_acoustic(NumericVector pars,
      * Note: TOA matrix is subset IFF use_toa = TRUE
      */
     if(use_toa) {
-      subTOAs = toa_ssq(Range(subRow, subRow + nCalls[i] - 1), _);
+      subTOAs_raw = toa(Range(subRow, subRow + nCalls[i] - 1), _);
+      subTOAs_ssq = toa_ssq(Range(subRow, subRow + nCalls[i] - 1), _);
     }
     NumericMatrix subCaps = caps(Range(subRow, subRow + nCalls[i] - 1), _);
     subRow += nCalls[i];
@@ -154,10 +157,7 @@ double scr_nll_acoustic(NumericVector pars,
          */
         if (use_toa){
           double sigma_toa = exp(pars[4]);
-          logfCapt_givenNS[j] += ((1 - numNonZero(subTOAs(k, _))) * log(sigma_toa)) - (subTOAs(k, j) / (2 * pow(sigma_toa, 2)));
-          if(R_IsNaN(subTOAs(k, j))) {
-            Rcout << "(" << subTOAs.nrow() << ", " << subTOAs.ncol() << ") : (" << k << ", " << j << ") | ";
-          }
+          logfCapt_givenNS[j] += ((1 - numNonZero(subTOAs_raw(k, _))) * log(sigma_toa)) - (subTOAs_ssq(k, j) / (2 * pow(sigma_toa, 2)));
         }
 
         // Looping through each trap

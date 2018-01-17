@@ -49,9 +49,9 @@ scr.fit = function(capthist, traps, mask,
   ## - Otherwise:
   ##    - use_toa = TRUE
   ##    - toa given
-  if(is.null(toa)){## || toa == FALSE) {
+  if(is.null(toa)){
     use_toa = FALSE
-    toa_ssq = matrix()
+    toa_ssq = toa = matrix()
   } else {
     use_toa = TRUE
 
@@ -69,6 +69,7 @@ scr.fit = function(capthist, traps, mask,
                 traps = traps,
                 mask = mask,
                 maskDists = maskDists,
+                toa = toa,
                 toa_ssq = toa_ssq,
                 use_toa = use_toa,
                 hessian = TRUE)
