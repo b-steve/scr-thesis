@@ -39,11 +39,17 @@ double scr_nll(NumericVector pars,
                NumericMatrix caps,
                NumericMatrix traps,
                NumericMatrix mask,
-               NumericMatrix maskDists) {
+               NumericMatrix maskDists,
+               bool binary) {
   // Storing/initialising (starting) parameter values.
   double D = exp(pars[0]);
-  double g0 = exp(pars[1]);//exp(pars[1]) / (1 + exp(pars[1]));
+  double g0;
   double sigma = exp(pars[2]);
+  if(binary) {
+    g0 = R::plogis(pars[1], 0, 1, 1, 0);//exp(pars[1]);
+  } else {
+    g0 = exp(pars[1]);
+  }
 
   // Number of animals detected.
   int n = caps.nrow();
@@ -64,14 +70,15 @@ double scr_nll(NumericVector pars,
    * Constructing a detection probability matrix.
    * - Element (i, j) gives prob. of animal @ ith mask pt. being detected @ jth trap.
    * - Line that fills in maskProbs(i, j) is the Hazard Half-Normal function (HHN)
+   * - Need to include machine minimum so that we don't get any Infs
    */
   NumericMatrix maskProbs(maskDists.nrow(), maskDists.ncol());
   for(int i = 0; i < maskDists.nrow(); i++) {
     for(int j = 0; j < maskDists.ncol(); j++) {
-      maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0)));
+      maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))) + DBL_MIN;
     }
   }
-
+//Rcout << "(" << maskProbs.nrow() << ", " << maskProbs.ncol() << ")";
   /*
    * Constructing a detection probability vector
    * - ith element = P(animal @ ith mask pt. is detected by >= 1 trap)
@@ -106,9 +113,19 @@ double scr_nll(NumericVector pars,
        *  - Also note: R::dbinom(double x, double n, double p, int lg)
        *    - Where 'int lg' is 0 = F, 1 = T.
        */
-      logfCapt_givenS[j] = R::dbinom(caps(i, 0), 1, maskProbs(j, 0), 1);
-      for(int k = 1; k < caps.ncol(); k++) {
-        logfCapt_givenS[j] += R::dbinom(caps(i, k), 1, maskProbs(j, k), 1);
+      if(binary) {
+        logfCapt_givenS[j] = R::dbinom(caps(i, 0), 1, maskProbs(j, 0), 1);
+        //Rcout << "j: " << j << " | k: " << 0 << " | maskProb: " << maskProbs(j, 0) << " | caps: " << caps(i, 0) << " | logfCapt_givenS: " << logfCapt_givenS[j] << "\n";
+        for(int k = 1; k < caps.ncol(); k++) {
+          logfCapt_givenS[j] += R::dbinom(caps(i, k), 1, maskProbs(j, k), 1);
+        //Rcout << "j: " << j << " | k: " << k << " | maskProb: " << maskProbs(j, k) << " | caps: " << caps(i, k) << " | logfCapt_givenS: " << logfCapt_givenS[j] << "\n";
+        //Rcout << logfCapt_givenS[j] << " | ";
+        }
+      } else {
+        logfCapt_givenS[j] = R::dpois(caps(i, 0), maskProbs(j, 0), 1);
+        for(int k = 1; k < caps.ncol(); k++) {
+          logfCapt_givenS[j] += R::dpois(caps(i, k), maskProbs(j, k), 1);
+        }
       }
     }
     // Summing probabilities over all mask points.

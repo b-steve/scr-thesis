@@ -3,7 +3,8 @@
 #=====================================#
 #' @export
 scr.nll = function(pars, caps, traps, mask, maskDists) {
-  scr_nll(pars, caps, traps, mask, maskDists)
+  binary = ifelse(any(caps > 0), FALSE, TRUE)
+  scr_nll(pars, caps, traps, mask, maskDists, binary)
 }
 
 #==========================================================================#

@@ -3,7 +3,7 @@
 #=====================================#
 #' @export
 scr.fit = function(capthist, traps, mask,
-                   start = NULL, acoustic = FALSE,
+                   start = NULL, acoustic = FALSE, binom = FALSE,
                    toa = NULL, speed_sound = 330) {
   ## General error/exception handling
   if(length(start) == 4 && acoustic == FALSE) {
@@ -27,12 +27,12 @@ scr.fit = function(capthist, traps, mask,
   ##      - time of arrival (toa) has parameter sigma_toa
   ## - Machine minimum subtracted so as to avoid log errors
   start = start - .Machine$double.xmin
-  if(acoustic) {
+  if(acoustic | binom) {
     start = c(log(start[1]),
             qlogis(start[2]),
             log(start[3:length(start)]))
   } else {
-    ## 3 parameters, all logged
+    ## 3 parameters, POISSON: all logged
     ## - May have 4th parameter (sigma_toa)
     start = log(start)
   }
@@ -40,6 +40,7 @@ scr.fit = function(capthist, traps, mask,
 
   ## Calculating mask distances before giving to optim
   ## - More efficient
+  ## - Note: for some reason,the basic scr.nll requires eucdist_nll to have (traps, mask)
   maskDists = eucdist_nll(mask, traps)
 
   ## Setting `use_toa` for the likelihood
@@ -99,12 +100,18 @@ scr.fit = function(capthist, traps, mask,
     ## But columns still need to be returned (if/when simulations are run)
     cnames = c("Estimate", "SE", "Lower", "Upper")
   } else {
+    ## Calculating basic Wald CIs
     se = sqrt(diag(solve(fit$hess)))
     waldCI = t(sapply(1:length(fittedPars),
                       function(i) fittedPars[i] + (c(-1, 1) * (qnorm(0.975) * se[i]))))
-    waldCI = rbind(exp(waldCI[1, ]),
-                   plogis(waldCI[2, ]),
-                   exp(waldCI[3:length(fittedPars), ]))
+    ## Back-transforming the confidence limits, depending on whether we're using lambda0 or g0
+    if(acoustic | binom) {
+      waldCI = rbind(exp(waldCI[1, ]),
+                     plogis(waldCI[2, ]),
+                     exp(waldCI[3:length(fittedPars), ]))
+    } else {
+      waldCI = exp(waldCI)
+    }
 
     ## Using the delta method to get the standard errors
     ## - G = jacobian matrix of partial derivatives of back-transformed
@@ -125,7 +132,10 @@ scr.fit = function(capthist, traps, mask,
     parNames = "sigma_toa"
   }
   if(acoustic) {
-    parNames = c("D", "g0", "sigma", "lambda_c", parNames)
+    parNames = c("lambda_c", parNames)
+  }
+  if(binom) {
+    parNames = c("D", "g0", "sigma", parNames)
 
     fittedPars = c(exp(fittedPars[1]),
                    plogis(fittedPars[2]),
