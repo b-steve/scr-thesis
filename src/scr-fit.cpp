@@ -78,7 +78,7 @@ double scr_nll(NumericVector pars,
       maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))) + DBL_MIN;
     }
   }
-//Rcout << "(" << maskProbs.nrow() << ", " << maskProbs.ncol() << ")";
+
   /*
    * Constructing a detection probability vector
    * - ith element = P(animal @ ith mask pt. is detected by >= 1 trap)
@@ -115,11 +115,8 @@ double scr_nll(NumericVector pars,
        */
       if(binary) {
         logfCapt_givenS[j] = R::dbinom(caps(i, 0), 1, maskProbs(j, 0), 1);
-        //Rcout << "j: " << j << " | k: " << 0 << " | maskProb: " << maskProbs(j, 0) << " | caps: " << caps(i, 0) << " | logfCapt_givenS: " << logfCapt_givenS[j] << "\n";
         for(int k = 1; k < caps.ncol(); k++) {
           logfCapt_givenS[j] += R::dbinom(caps(i, k), 1, maskProbs(j, k), 1);
-        //Rcout << "j: " << j << " | k: " << k << " | maskProb: " << maskProbs(j, k) << " | caps: " << caps(i, k) << " | logfCapt_givenS: " << logfCapt_givenS[j] << "\n";
-        //Rcout << logfCapt_givenS[j] << " | ";
         }
       } else {
         logfCapt_givenS[j] = R::dpois(caps(i, 0), maskProbs(j, 0), 1);
