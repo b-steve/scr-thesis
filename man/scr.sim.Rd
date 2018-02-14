@@ -11,7 +11,8 @@ Randomly generates a spatial capture-recapture data set, and returns a matrix of
 scr.sim(lambda_0, sigma, traps, density = 50,
     distr = c("pois", "binom", "nbinom"),
     limits = list(xlim = NULL, ylim = NULL), draw = FALSE,
-    acoustic = FALSE, lambda_c = NULL, ...)
+    binom.n = 1, acoustic = FALSE, lambda_c = NULL,
+    toa = FALSE, sigma_toa = 0.002, speed_sound = 343, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -35,6 +36,9 @@ scr.sim(lambda_0, sigma, traps, density = 50,
   }
   \item{draw}{
     Plot the randomly generated points and traps. Default value is \code{FALSE}.
+  }
+  \item{binom.n}{
+    Specifies the number of trials when generating from the binomial distribution. Default value is 1 (i.e. Bernoulli trial).
   }
   \item{acoustic}{
     Simulate acoustic capture histories. Default value is \code{FALSE}. See 'Details'.

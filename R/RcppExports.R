@@ -13,8 +13,8 @@ eucdist_nll <- function(points, traplocations) {
     .Call('_scr_eucdist_nll', PACKAGE = 'scr', points, traplocations)
 }
 
-scr_nll <- function(pars, caps, traps, mask, maskDists, binary) {
-    .Call('_scr_scr_nll', PACKAGE = 'scr', pars, caps, traps, mask, maskDists, binary)
+scr_nll <- function(pars, caps, traps, mask, maskDists, binom) {
+    .Call('_scr_scr_nll', PACKAGE = 'scr', pars, caps, traps, mask, maskDists, binom)
 }
 
 pointgen <- function(n = 50L, xlim = as.numeric( c(0, 100)), ylim = as.numeric( c(0, 100))) {

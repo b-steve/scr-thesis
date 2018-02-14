@@ -86,7 +86,7 @@ double scr_nll_acoustic(NumericVector pars,
   NumericMatrix maskProbs(maskDists.nrow(), maskDists.ncol());
   for(int i = 0; i < maskDists.nrow(); i++) {
     for(int j = 0; j < maskDists.ncol(); j++) {
-      maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0)));
+      maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))) + DBL_MIN;
     }
   }
 
@@ -103,7 +103,7 @@ double scr_nll_acoustic(NumericVector pars,
   }
 
   /*
-  *  Probability of detecting on specific call emitted from s
+  *  Probability of detecting one specific call emitted from s
   *
   */
   NumericVector pDetected = 1 - pAvoid;

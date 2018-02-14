@@ -40,12 +40,12 @@ double scr_nll(NumericVector pars,
                NumericMatrix traps,
                NumericMatrix mask,
                NumericMatrix maskDists,
-               bool binary) {
+               bool binom) {
   // Storing/initialising (starting) parameter values.
   double D = exp(pars[0]);
   double g0;
   double sigma = exp(pars[2]);
-  if(binary) {
+  if(binom) {
     g0 = R::plogis(pars[1], 0, 1, 1, 0);//exp(pars[1]);
   } else {
     g0 = exp(pars[1]);
@@ -113,7 +113,7 @@ double scr_nll(NumericVector pars,
        *  - Also note: R::dbinom(double x, double n, double p, int lg)
        *    - Where 'int lg' is 0 = F, 1 = T.
        */
-      if(binary) {
+      if(binom) {
         logfCapt_givenS[j] = R::dbinom(caps(i, 0), 1, maskProbs(j, 0), 1);
         for(int k = 1; k < caps.ncol(); k++) {
           logfCapt_givenS[j] += R::dbinom(caps(i, k), 1, maskProbs(j, k), 1);

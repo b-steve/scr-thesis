@@ -6,8 +6,22 @@ scr.fit = function(capthist, traps, mask,
                    start = NULL, acoustic = FALSE, binom = FALSE,
                    toa = NULL, speed_sound = 330) {
   ## General error/exception handling
+  if(is.null(start)) {
+    warning("Initial pararameter values defaulting to c(D = 50, lambda_0 = 5, sigma = 15)")
+    start = c(50, 5, 15)
+  } else if(is.null(start) && acoustic) {
+    warning("Initial pararameter values defaulting to c(D = 50, lambda_0 = 5, sigma = 15), lambda_c = 10")
+    start = c(50, 5, 15, 10)
+  } else if(is.null(start) && !is.null(toa)) {
+    warning("Initial pararameter values defaulting to c(D = 50, lambda_0 = 5, sigma = 15), lambda_c = 10, sigma_toa = 0.002")
+    start = c(50, 5, 15, 10, 0.002)
+  }
   if(length(start) == 4 && acoustic == FALSE) {
     warning("Data treated as acoustic captures (4 start parameters)")
+  }
+  if(!is.null(toa) && acoustic == FALSE) {
+    warning("Data treated as acoustic captures (!is.null(toa))")
+    acoustic = TRUE
   }
   if(is.null(toa) && length(start) == 5) {
     warning("Give time of arrival matrix")
@@ -80,6 +94,7 @@ scr.fit = function(capthist, traps, mask,
                 traps = traps,
                 mask = mask,
                 maskDists = maskDists,
+                binom = binom,
                 hessian = TRUE)
   }
 
@@ -105,7 +120,7 @@ scr.fit = function(capthist, traps, mask,
     waldCI = t(sapply(1:length(fittedPars),
                       function(i) fittedPars[i] + (c(-1, 1) * (qnorm(0.975) * se[i]))))
     ## Back-transforming the confidence limits, depending on whether we're using lambda0 or g0
-    if(acoustic | binom) {
+    if(acoustic || binom) {
       waldCI = rbind(exp(waldCI[1, ]),
                      plogis(waldCI[2, ]),
                      exp(waldCI[3:length(fittedPars), ]))
@@ -134,7 +149,7 @@ scr.fit = function(capthist, traps, mask,
   if(acoustic) {
     parNames = c("lambda_c", parNames)
   }
-  if(binom) {
+  if(binom || acoustic) {
     parNames = c("D", "g0", "sigma", parNames)
 
     fittedPars = c(exp(fittedPars[1]),

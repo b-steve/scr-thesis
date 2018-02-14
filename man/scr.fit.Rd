@@ -27,6 +27,9 @@ scr.fit(capthist, traps, mask, start = NULL, acoustic = FALSE)
   \item{acoustic}{
   Fit acoustic capture data. See 'Details'.
   }
+  \item{binom}{
+  Specifies whether data are binomial. See 'Details'.
+  }
   \item{toa}{
   Time of arrival matrix. See 'Details'.
   }
@@ -38,6 +41,8 @@ scr.fit(capthist, traps, mask, start = NULL, acoustic = FALSE)
 Parameter estimates are obtained by maximising likelihood (via  \code{optim}).
 
 When fitting cue-based (e.g. acoustic) data, \code{capthist} matrices must contain column of 'animal IDs' as their last column.
+
+Fitting binary data means that the parameter \code{g0} is included, rather than \code{lambda0}. Starting parameter values will thus default to different values, depending on whether the data are binary.
 
 Time of arrival matrix has the same dimensions as the capture history matrix. Each entry is now the time elapsed between the beginning of recording, and a detection. Inclusion of this matrix requires an extra parameter appended to \code{start}.
 }

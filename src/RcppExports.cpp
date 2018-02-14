@@ -48,8 +48,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // scr_nll
-double scr_nll(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, bool binary);
-RcppExport SEXP _scr_scr_nll(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP binarySEXP) {
+double scr_nll(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, bool binom);
+RcppExport SEXP _scr_scr_nll(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP binomSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -58,8 +58,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type traps(trapsSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type mask(maskSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type maskDists(maskDistsSEXP);
-    Rcpp::traits::input_parameter< bool >::type binary(binarySEXP);
-    rcpp_result_gen = Rcpp::wrap(scr_nll(pars, caps, traps, mask, maskDists, binary));
+    Rcpp::traits::input_parameter< bool >::type binom(binomSEXP);
+    rcpp_result_gen = Rcpp::wrap(scr_nll(pars, caps, traps, mask, maskDists, binom));
     return rcpp_result_gen;
 END_RCPP
 }
