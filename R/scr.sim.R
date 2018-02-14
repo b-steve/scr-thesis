@@ -66,7 +66,7 @@ scr.sim = function(lambda_0, sigma, traps,
   if(distr == "pois" & acoustic == FALSE) {
     rDistr = paste0("r", distr, "(length(d), lambda_0 * exp(-d^2 / (2 * sigma^2)))")
   } else if(distr == "bernoulli" | distr == "binom" | acoustic) {
-    rDistr = paste0("r", "binom", "(length(d),", binom.n, "lambda_0 * exp(-d^2 / (2 * sigma^2)))")
+    rDistr = paste0("r", "binom", "(length(d),", binom.n, ", lambda_0 * exp(-d^2 / (2 * sigma^2)))")
   } else if(distr == "negbin" | distr == "nbinom") {
     ifelse(!is.null(list(...)$size), size <- list(...)$size, size <- 2)
     rDistr = paste0("r", "nbinom", "(length(d), mu = lambda_0 * exp(-d^2 / (2 * sigma^2)), size = size)")

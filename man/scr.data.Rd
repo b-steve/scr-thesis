@@ -17,8 +17,10 @@ an acoustic capture history, trap co-ordinates, and mask point co-ordinates.
 # set.seed(291112)
 # scr.data$capt = scr.sim(5, 75, scr.data$traps)
 # scr.data$bin.capt = scr.sim(0.5, 75, scr.data$traps, distr = "binom")
+# scr.data$acoustic.capt = scr.sim(0.5, 75, scr.data$traps, acoustic = TRUE, lambda_c = 2)
 
 data(scr.data)
+
 scr.fit(scr.data$capt, scr.data$traps, scr.data$mask)
 }
 \keyword{datasets}
