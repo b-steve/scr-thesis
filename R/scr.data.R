@@ -15,7 +15,6 @@
 #'
 #'
 #' @examples
-#'
 #' data(scr.data)
 #' example.fit = scr.fit(scr.data$capt, scr.data$traps, scr.data$mask)
 "scr.data"
