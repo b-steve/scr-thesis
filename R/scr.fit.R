@@ -7,13 +7,13 @@ scr.fit = function(capthist, traps, mask,
                    toa = NULL, speed_sound = 330) {
   ## General error/exception handling
   if(is.null(start)) {
-    warning("Initial pararameter values defaulting to c(D = 50, lambda_0 = 5, sigma = 15)")
+    warning("Initial pararameter values defaulting to c(D = 50, lambda0 = 5, sigma = 15)")
     start = c(50, 5, 15)
   } else if(is.null(start) && acoustic) {
-    warning("Initial pararameter values defaulting to c(D = 50, lambda_0 = 5, sigma = 15), lambda_c = 10")
+    warning("Initial pararameter values defaulting to c(D = 50, lambda0 = 5, sigma = 15), lambda_c = 10")
     start = c(50, 5, 15, 10)
   } else if(is.null(start) && !is.null(toa)) {
-    warning("Initial pararameter values defaulting to c(D = 50, lambda_0 = 5, sigma = 15), lambda_c = 10, sigma_toa = 0.002")
+    warning("Initial pararameter values defaulting to c(D = 50, lambda0 = 5, sigma = 15), lambda_c = 10, sigma_toa = 0.002")
     start = c(50, 5, 15, 10, 0.002)
   }
   if(length(start) == 4 && acoustic == FALSE) {
@@ -156,7 +156,7 @@ scr.fit = function(capthist, traps, mask,
                    plogis(fittedPars[2]),
                    exp(fittedPars[3:length(fittedPars)]))
   } else {
-    parNames = c("D", "lambda_0", "sigma", parNames)
+    parNames = c("D", "lambda0", "sigma", parNames)
 
     fittedPars = exp(fittedPars)
   }

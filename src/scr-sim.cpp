@@ -88,7 +88,7 @@ NumericMatrix toCapthist_matrix(NumericMatrix captures) {
 /*
 // [[Rcpp::export]]
 NumericVector rdistr(String distribution,
-              double lambda_0,
+              double lambda0,
               int n = 1,
               double prob = NULL,
               double mu = NULL,
@@ -98,11 +98,11 @@ NumericVector rdistr(String distribution,
 
   // String matching
   if(distribution == "pois") {
-    result = rpois(n, lambda_0);
+    result = rpois(n, lambda0);
   } else if(distribution == "binom") {
     result = rbinom(n, 1, prob);
   } else if(distribution == "nbinom") {
-    result = rnbinom(n, mu = lambda_0, size = size);
+    result = rnbinom(n, mu = lambda0, size = size);
   } else {
     return 0;
   }

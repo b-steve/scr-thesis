@@ -8,7 +8,7 @@ Simulate Capture Data
 Randomly generates a spatial capture-recapture data set, and returns a matrix of encounter rates for each animal at each trap (omega).
 }
 \usage{
-scr.sim(lambda_0, sigma, traps, density = 50,
+scr.sim(lambda0, sigma, traps, density = 50,
     distr = c("pois", "binom", "nbinom"),
     limits = list(xlim = NULL, ylim = NULL), draw = FALSE,
     binom.n = 1, acoustic = FALSE, lambda_c = NULL,
@@ -16,7 +16,7 @@ scr.sim(lambda_0, sigma, traps, density = 50,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{lambda_0}{
+  \item{lambda0}{
 	Baseline encounter rate (i.e. encounter rate for d = 0)
   }
   \item{sigma}{
@@ -92,12 +92,12 @@ Callum Young
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-## Simulating with lambda_0 = 5, sigma = 15
+## Simulating with lambda0 = 5, sigma = 15
 ## Trap locations are stored in data(scr.data)
 scr.sim(5, 15, scr.data$traps)
 
 ## Acoustic simulation
-## Note that for acoustic captures, 0 < lambda_0 < 1
+## Note that for acoustic captures, 0 < lambda0 < 1
 scr.sim(1, 10, scr.data$traps, acoustic = TRUE, lambda_c = 3)
 
 %%##---- Should be DIRECTLY executable !! ----

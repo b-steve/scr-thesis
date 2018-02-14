@@ -2,7 +2,7 @@
 #      Main simulation function       #
 #=====================================#
 #' @export
-scr.sim = function(lambda_0, sigma, traps,
+scr.sim = function(lambda0, sigma, traps,
                    density = 50,
                    distr = "pois",
                    limits = list(xlim = NULL, ylim = NULL),
@@ -64,12 +64,12 @@ scr.sim = function(lambda_0, sigma, traps,
 
   ## Setting up the random count generation - depending on the distribution
   if(distr == "pois" & acoustic == FALSE) {
-    rDistr = paste0("r", distr, "(length(d), lambda_0 * exp(-d^2 / (2 * sigma^2)))")
+    rDistr = paste0("r", distr, "(length(d), lambda0 * exp(-d^2 / (2 * sigma^2)))")
   } else if(distr == "bernoulli" | distr == "binom" | acoustic) {
-    rDistr = paste0("r", "binom", "(length(d),", binom.n, ", lambda_0 * exp(-d^2 / (2 * sigma^2)))")
+    rDistr = paste0("r", "binom", "(length(d),", binom.n, ", lambda0 * exp(-d^2 / (2 * sigma^2)))")
   } else if(distr == "negbin" | distr == "nbinom") {
     ifelse(!is.null(list(...)$size), size <- list(...)$size, size <- 2)
-    rDistr = paste0("r", "nbinom", "(length(d), mu = lambda_0 * exp(-d^2 / (2 * sigma^2)), size = size)")
+    rDistr = paste0("r", "nbinom", "(length(d), mu = lambda0 * exp(-d^2 / (2 * sigma^2)), size = size)")
   }
 
   ## Calculating the distances between each activity centre and every trap
