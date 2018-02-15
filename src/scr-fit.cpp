@@ -66,16 +66,37 @@ double scr_nll(NumericVector pars,
    */
   //NumericMatrix maskDists = eucdist_nll(mask, traps);
 
+
   /*
-   * Constructing a detection probability matrix.
-   * - Element (i, j) gives prob. of animal @ ith mask pt. being detected @ jth trap.
-   * - Line that fills in maskProbs(i, j) is the Hazard Half-Normal function (HHN)
-   * - Need to include machine minimum so that we don't get any Infs
+   * Constructing distance matrix.
+   * - Element (i, j) gives dist. b/w ith mask pint and jth trap.
    */
+  //NumericMatrix maskDists = eucdist_nll(mask, traps);
+
+  /*
+  * Constructing a detection probability matrix.
+  * - Element (i, j) gives prob. of animal @ ith mask pt. being detected @ jth trap.
+  * - Line that fills in maskProbs(i, j) is the detection function
+  * - Need to include machine minimum so that we don't get any Infs
+  *
+  * Detection function for the non-binomial/binary data is the HHN
+  * Binomial data have HN detection function
+  */
   NumericMatrix maskProbs(maskDists.nrow(), maskDists.ncol());
-  for(int i = 0; i < maskDists.nrow(); i++) {
-    for(int j = 0; j < maskDists.ncol(); j++) {
-      maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))) + DBL_MIN;
+  NumericMatrix maskER(maskDists.nrow(), maskDists.ncol());
+
+  if(binom) {
+    for(int i = 0; i < maskDists.nrow(); i++) {
+      for(int j = 0; j < maskDists.ncol(); j++) {
+        maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))) + DBL_MIN;
+      }
+    }
+  } else {
+    for(int i = 0; i < maskDists.nrow(); i++) {
+      for(int j = 0; j < maskDists.ncol(); j++) {
+        maskER(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))) + DBL_MIN;
+        maskProbs(i, j) = 1 - exp(-maskER(i, j));
+      }
     }
   }
 

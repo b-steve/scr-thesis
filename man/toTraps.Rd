@@ -1,23 +1,23 @@
-\name{toCapthist}
-\alias{toCapthist}
+\name{toTraps}
+\alias{toTraps}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Convert matrix into capthist format
+Format matrix of traps co-ordinates
 }
 \description{
-Convert a matrix returned by \code{scr.sim()} into a format expected by \code{make.capthist()}.
+Convert a matrix of trap co-ordinates into a format expected by \code{read.traps()}.
 }
 \usage{
-toCapthist(captures)
+toTraps(traps)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{captures}{
-	Matrix returned by \code{scr.sim()}.
+  \item{traps}{
+	  Matrix of x- and y- co-ordinates.
   }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Detector IDs are automatically given as \code{1:nrow(traps)}.
 }
 \value{
 %%  ~Describe the value returned
@@ -25,7 +25,9 @@ toCapthist(captures)
 %%  \item{comp1 }{Description of 'comp1'}
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
-A data frame is returned with \code{session}, \code{ID}, \code{occasion}, and \code{trap} columns. The data frame is formatted such that it may be read by \code{\link[secr:make.capthist]{secr::make.capthist()}}. Each row corresponds to a capture, and describes the session and trapping occasion that it was detected during.
+A data frame is returned, with detector IDs, and co-ordinates labelled "x" and "y".
+
+This data frame can be read by \code{secr::read.traps()}.
 }
 \references{
 Borchers, D. L. and Efford, M. G. (2008) Spatially explicit maximum likelihood methods for capture--recapture studies. \emph{Biometrics} \strong{64}, 377--385.
@@ -43,6 +45,7 @@ Callum Young
 
 \seealso{
 \code{\link[secr]{secr}}
+\code{\link[secr:read.traps]{secr::read.traps}}
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
@@ -51,7 +54,7 @@ Callum Young
 
 load(scr.data)
 
-toCapthist(scr.data$capt)
+read.traps(data = toTraps(scr.data$traps), detector = "count")
 
 %%##---- Should be DIRECTLY executable !! ----
 %%##-- ==>  Define data, use random,

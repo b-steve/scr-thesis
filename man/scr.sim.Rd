@@ -12,7 +12,7 @@ scr.sim(lambda0, sigma, traps, density = 50,
     distr = c("pois", "binom", "nbinom"),
     limits = list(xlim = NULL, ylim = NULL), draw = FALSE,
     binom.n = 1, acoustic = FALSE, lambda_c = NULL,
-    toa = FALSE, sigma_toa = 0.002, speed_sound = 343, ...)
+    toa = FALSE, sigma_toa = 0.002, speed_sound = 330, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -53,10 +53,10 @@ scr.sim(lambda0, sigma, traps, density = 50,
     Error in recording time. Default value is 0.002.
   }
   \item{speed_sound}{
-    Speed of sound. Default is 343(m/s).
+    Speed of sound. Default is 330(m/s).
   }
   \item{...}{
-	  Further \link[graphics::par]{graphical parameters} may also be supplied as arguments.
+	  Further \link[graphics:par]{graphical parameters} may also be supplied as arguments.
   }
 }
 \details{
@@ -89,7 +89,7 @@ Callum Young
 
 \seealso{
 \code{\link[secr]{secr}}
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link[scr:scr.fit]{scr::scr.fit}}
 }
 \examples{
 ## Simulating with lambda0 = 5, sigma = 15

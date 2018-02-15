@@ -8,7 +8,8 @@ Spatial Capture-Recapture
 Maximises likelihood and returns a set of parameter estimates, given a matrix of capture histories, trap locations, and mask points.
 }
 \usage{
-scr.fit(capthist, traps, mask, start = NULL, acoustic = FALSE)
+scr.fit(capthist, traps, mask, start = NULL, binom = FALSE, acoustic = FALSE,
+toa = NULL, speed_sound = 330)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,11 +25,11 @@ scr.fit(capthist, traps, mask, start = NULL, acoustic = FALSE)
   \item{start}{
   Vector of starting values for the optimisation.
   }
-  \item{acoustic}{
-  Fit acoustic capture data. See 'Details'.
-  }
   \item{binom}{
   Specifies whether data are binomial. See 'Details'.
+  }
+  \item{acoustic}{
+  Fit acoustic capture data. See 'Details'.
   }
   \item{toa}{
   Time of arrival matrix. See 'Details'.
@@ -66,19 +67,15 @@ Callum Young
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link[secr]{secr}},
-\code{\link[scr]{scr.sim}}
+\code{\link[secr:secr]{secr}},
+\code{\link[scr:scr.sim]{scr::scr.sim}}
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-%%##---- Should be DIRECTLY executable !! ----
-%%##-- ==>  Define data, use random,
-%%##--	or do  help(data=index)  for the standard data sets.
-
 ## Loading in the example data (including trap and mask locations).
 data(scr.data)
 
-## Then running scr.sim() with lambda_0 = 5, sigma = 75, density = 2.
+## Then running scr.sim() with lambda0 = 5, sigma = 75, density = 2.
 capt = scr.sim(5, 75, scr.data$traps, density = 2)
 
 ## Starting parameters are saved for use in the model fitting function.

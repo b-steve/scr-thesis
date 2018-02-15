@@ -12,7 +12,7 @@ scr.sim = function(lambda0, sigma, traps,
                    lambda_c = NULL,
                    toa = FALSE,
                    sigma_toa = 0.002,
-                   speed_sound = 343,
+                   speed_sound = 330,
                    ...) {
   ## Setting up the total survey area
   ##  - Survey area (vs. trap area) is based on extreme trap co-ordinates
@@ -204,6 +204,17 @@ toCapthist = function(captures) {
 #==========================================================================#
 #==========================================================================#
 
+#=====================================#
+#      read.traps format function     #
+#=====================================#
+#' @export
+toTraps = function(traps) {
+  colnames(traps) = c("x", "y")
+  data.frame(testID = 1:nrow(traps), traps)
+}
+
+#==========================================================================#
+#==========================================================================#
 
 #=====================================#
 #          Package postamble          #
