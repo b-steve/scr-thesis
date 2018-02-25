@@ -37,6 +37,9 @@ toa = NULL, speed_sound = 330)
   \item{speed_sound}{
   Speed of sound. Default is 330(m/s).
   }
+  \item{method}{
+  Method used for optimisation.
+  }
 }
 \details{
 Parameter estimates are obtained by maximising likelihood (via  \code{optim}).
@@ -46,6 +49,8 @@ When fitting cue-based (e.g. acoustic) data, \code{capthist} matrices must conta
 Fitting binary data means that the parameter \code{g0} is included, rather than \code{lambda0}. Starting parameter values will thus default to different values, depending on whether the data are binary.
 
 Time of arrival matrix has the same dimensions as the capture history matrix. Each entry is now the time elapsed between the beginning of recording, and a detection. Inclusion of this matrix requires an extra parameter appended to \code{start}.
+
+The method used for optimisation can be any of those valid for\code{optim}. See \code{\link[stats:optim]{optim}} for further details.
 }
 \value{
 %%  ~Describe the value returned

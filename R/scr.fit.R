@@ -4,7 +4,7 @@
 #' @export
 scr.fit = function(capthist, traps, mask,
                    start = NULL, acoustic = FALSE, binom = FALSE,
-                   toa = NULL, speed_sound = 330) {
+                   toa = NULL, speed_sound = 330, method = "Nelder-Mead") {
   ## General error/exception handling
   if(is.null(start)) {
     warning("Initial pararameter values defaulting to c(D = 50, lambda0 = 5, sigma = 15)")
@@ -87,6 +87,7 @@ scr.fit = function(capthist, traps, mask,
                 toa = toa,
                 toa_ssq = toa_ssq,
                 use_toa = use_toa,
+                method = method,
                 hessian = TRUE)
   } else {
     fit = optim(start, scr.nll,
@@ -95,6 +96,7 @@ scr.fit = function(capthist, traps, mask,
                 mask = mask,
                 maskDists = maskDists,
                 binom = binom,
+                method = method,
                 hessian = TRUE)
   }
 
