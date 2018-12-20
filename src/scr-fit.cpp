@@ -165,6 +165,9 @@ double scr_nll(NumericVector pars,
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - n * log(sum(pDetected));
 
+  // Printing log-likelihood.
+  std::cout << "LL: " << logLik << std::endl;
+  
   return -logLik;
 }
 

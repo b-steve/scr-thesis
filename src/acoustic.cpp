@@ -187,6 +187,9 @@ double scr_nll_acoustic(NumericVector pars,
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - nAnimals * log(sum(pAnimal));
 
+  // Printing log-likelihood.
+  std::cout << "LL: " << logLik << std::endl;
+  
   // Returning log-likelihood
   return -logLik;
 }
