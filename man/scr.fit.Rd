@@ -77,6 +77,7 @@ Callum Young
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
+\dontrun{
 ## Loading in the example data (including trap and mask locations).
 data(scr.data)
 
@@ -89,6 +90,7 @@ par.start = c(1, 1, 50)
 ## Finally, fitting a model to the data,
 ##  using the trap and mask points in the example data.
 scr.fit(capt, scr.data$traps, scr.data$mask, start = par.start)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

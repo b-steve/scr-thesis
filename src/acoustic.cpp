@@ -60,7 +60,6 @@ double scr_nll_acoustic(NumericVector pars,
   double g0 = R::plogis(pars[1], 0, 1, 1, 0);//exp(pars[1]) / (1 + exp(pars[1]));
   double sigma = exp(pars[2]);
   double lambda_c = exp(pars[3]);
-
   // Number of animals
   int nAnimals = nCalls.size();
   // Number of calls detected in total.
@@ -157,7 +156,7 @@ double scr_nll_acoustic(NumericVector pars,
          */
         if (use_toa){
           double sigma_toa = exp(pars[4]);
-          logfCapt_givenNS[j] += ((1 - numNonZero(subTOAs_raw(k, _))) * log(sigma_toa)) - (subTOAs_ssq(k, j) / (2 * pow(sigma_toa, 2)));
+          logfCapt_givenNS[j] += (1 - numNonZero(subCaps(k, _))) * log(sigma_toa) - (subTOAs_ssq(k, j) / (2 * pow(sigma_toa, 2)));
         }
 
         // Looping through each trap
@@ -186,9 +185,6 @@ double scr_nll_acoustic(NumericVector pars,
 
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - nAnimals * log(sum(pAnimal));
-
-  // Printing log-likelihood.
-  std::cout << "LL: " << logLik << std::endl;
   
   // Returning log-likelihood
   return -logLik;

@@ -74,11 +74,10 @@ scr.fit = function(capthist, traps, mask,
     ## - Note: call to eucdist_nll has arguments reversed c.f. maskDists.
     toa_ssq = make_toa_ssq(toa, eucdist_nll(traps, mask), speed_sound)
   }
-
-  ## Taking the capthist, traps, and mask and maximising likelihood
-  ## - Note that likelihood function changes for acoustic
-  ## - Requires start values
-  if(acoustic) {
+    ## Taking the capthist, traps, and mask and maximising likelihood
+    ## - Note that likelihood function changes for acoustic
+    ## - Requires start values
+    if(acoustic) {
     fit = optim(start, scr.nll.acoustic,
                 caps = capthist,
                 traps = traps,
