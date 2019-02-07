@@ -52,7 +52,8 @@ double scr_nll_acoustic(NumericVector pars,
                         NumericMatrix toa_ssq,
                         bool use_toa,
 			bool is_g0_fixed,
-			double g0_fixed) {
+			double g0_fixed,
+			bool trace) {
   /*
    *  Storing/initialising (starting) parameter values.
    *  - Note that parameters are back-transformed
@@ -62,7 +63,8 @@ double scr_nll_acoustic(NumericVector pars,
   double g0;
   double sigma;
   double lambda_c;
-  if (g0_fixed){
+  double sigma_toa;
+  if (is_g0_fixed){
     g0 = g0_fixed;
     sigma = exp(pars[1]);
     lambda_c = exp(pars[2]);
@@ -166,7 +168,11 @@ double scr_nll_acoustic(NumericVector pars,
          * - FALSE: ignored
          */
         if (use_toa){
-          double sigma_toa = exp(pars[4]);
+	  if (is_g0_fixed){
+	    sigma_toa = exp(pars[3]);
+	  } else {
+	    sigma_toa = exp(pars[4]);
+	  }
           logfCapt_givenNS[j] += (1 - numNonZero(subCaps(k, _))) * log(sigma_toa) - (subTOAs_ssq(k, j) / (2 * pow(sigma_toa, 2)));
         }
 
@@ -196,7 +202,9 @@ double scr_nll_acoustic(NumericVector pars,
 
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - nAnimals * log(sum(pAnimal));
-  
+  if (trace){
+    std::cout << "D: " << D << ", g0: " << g0 << ", sigma: " << sigma << ", lambda_c: " << lambda_c << ", sigma_toa: " << sigma_toa << std::endl;
+  }
   // Returning log-likelihood
   return -logLik;
 }

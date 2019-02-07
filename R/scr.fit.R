@@ -4,7 +4,7 @@
 #' @export
 scr.fit = function(capthist, traps, mask,
                    start = NULL, acoustic = FALSE, binom = FALSE,
-                   toa = NULL, fix.g0 = NULL, speed_sound = 330, method = "Nelder-Mead") {
+                   toa = NULL, fix.g0 = FALSE, speed_sound = 330, trace = FALSE, method = "Nelder-Mead") {
     ## General error/exception handling
     if(is.null(start)) {
         warning("Initial pararameter values defaulting to c(D = 50, lambda0 = 5, sigma = 15)")
@@ -34,7 +34,11 @@ scr.fit = function(capthist, traps, mask,
         capthist = capthist[, 1, ]
         traps = capthist$traps
     }
-    
+    if (fix.g0){
+        g0.fixed <- start[2]
+    } else {
+        g0.fixed <- 1
+    }
     ## Transforming the start values
     ## - Note that:
     ##      - acoustic captures have one extra parameter (lambda_c)
@@ -50,15 +54,9 @@ scr.fit = function(capthist, traps, mask,
         ## - May have 4th parameter (sigma_toa)
         start = log(start)
     }
-
-    is.g0.fixed <- !is.null(fix.g0)
-    if (is.g0.fixed){
+    if (fix.g0){
         start <- start[-2]
-        g0.fixed <- fix.g0
-    } else {
-        g0.fixed <- 1
     }
-    
     ## Calculating mask distances before giving to optim
     ## - More efficient
     ## - Note: for some reason,the basic scr.nll requires eucdist_nll to have (traps, mask)
@@ -93,8 +91,9 @@ scr.fit = function(capthist, traps, mask,
                     toa = toa,
                     toa_ssq = toa_ssq,
                     use_toa = use_toa,
-                    is_g0_fixed = is.g0.fixed,
+                    is_g0_fixed = fix.g0,
                     g0_fixed = g0.fixed,
+                    trace = trace,
                     method = method,
                     hessian = TRUE)
     } else {
@@ -160,7 +159,7 @@ scr.fit = function(capthist, traps, mask,
         parNames = c("lambda_c", parNames)
     }
     if(binom || acoustic) {
-        if (is.g0.fixed){
+        if (fix.g0){
             parNames = c("D", "sigma", parNames)
             fittedPars = c(exp(fittedPars[1]),
                            exp(fittedPars[2:length(fittedPars)]))
@@ -176,7 +175,6 @@ scr.fit = function(capthist, traps, mask,
         
         fittedPars = exp(fittedPars)
     }
-    
     results = cbind(fittedPars, se, waldCI)
     dimnames(results) = list(parNames, c("Estimate", "SE", "Lower", "Upper"))
     results
