@@ -13,6 +13,7 @@ A dataset containing examples of simple SCR capture histories,
 an acoustic capture history, trap co-ordinates, and mask point co-ordinates.
 }
 \examples{
+\dontrun{
 ## Data are generated as follows.
 ##  - The same seed is used for each call to scr.sim()
 # set.seed(291112)
@@ -22,5 +23,6 @@ an acoustic capture history, trap co-ordinates, and mask point co-ordinates.
 
 data(scr.data)
 scr.fit(scr.data$capt, scr.data$traps, scr.data$mask)
+}
 }
 \keyword{datasets}
