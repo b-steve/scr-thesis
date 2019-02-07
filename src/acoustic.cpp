@@ -50,16 +50,27 @@ double scr_nll_acoustic(NumericVector pars,
                         NumericVector nCalls,
                         NumericMatrix toa,
                         NumericMatrix toa_ssq,
-                        bool use_toa) {
+                        bool use_toa,
+			bool is_g0_fixed,
+			double g0_fixed) {
   /*
    *  Storing/initialising (starting) parameter values.
    *  - Note that parameters are back-transformed
    *  - Also note that if use_toa = FALSE, there will be no sigma_toa to estimate
    */
   double D = exp(pars[0]);
-  double g0 = R::plogis(pars[1], 0, 1, 1, 0);//exp(pars[1]) / (1 + exp(pars[1]));
-  double sigma = exp(pars[2]);
-  double lambda_c = exp(pars[3]);
+  double g0;
+  double sigma;
+  double lambda_c;
+  if (g0_fixed){
+    g0 = g0_fixed;
+    sigma = exp(pars[1]);
+    lambda_c = exp(pars[2]);
+  } else {
+    g0 = R::plogis(pars[1], 0, 1, 1, 0);//exp(pars[1]) / (1 + exp(pars[1]));
+    sigma = exp(pars[2]);
+    lambda_c = exp(pars[3]);
+  }
   // Number of animals
   int nAnimals = nCalls.size();
   // Number of calls detected in total.

@@ -13,7 +13,7 @@ scr.nll = function(pars, caps, traps, mask, maskDists, binom) {
 #  Log-likelihood function (acoustic) #
 #=====================================#
 #' @export
-scr.nll.acoustic = function(pars, caps, traps, mask, maskDists, toa, toa_ssq, use_toa) {
+scr.nll.acoustic = function(pars, caps, traps, mask, maskDists, toa, toa_ssq, use_toa, is_g0_fixed, g0_fixed) {
   nCalls = table(caps[, ncol(caps)])
   scr_nll_acoustic(pars = pars,
                    caps = caps[, -ncol(caps)],
@@ -23,7 +23,9 @@ scr.nll.acoustic = function(pars, caps, traps, mask, maskDists, toa, toa_ssq, us
                    nCalls = nCalls,
                    toa = toa,
                    toa_ssq = toa_ssq,
-                   use_toa = use_toa)
+                   use_toa = use_toa,
+                   is_g0_fixed = is_g0_fixed,
+                   g0_fixed = g0_fixed)
 }
 
 #==========================================================================#
