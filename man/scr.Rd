@@ -41,6 +41,7 @@ This package absolutely wouldn't exist (or work) without Ben Stevenson. Without 
 \code{\link[scr:scr.data]{scr::scr.data}}
 }
 \examples{
+\dontrun{
 ## Simulating with lambda0 = 5, sigma = 15
 ## Trap locations are stored in data(scr.data)
 scr.sim(5, 15, scr.data$traps)
@@ -55,6 +56,7 @@ scr.fit(scr.data$bin.capt, scr.data$traps, scr.data$mask)
 %%##---- Should be DIRECTLY executable !! ----
 %%##-- ==>  Define data, use random,
 %%##--	or do  help(data=index)  for the standard data sets.
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
