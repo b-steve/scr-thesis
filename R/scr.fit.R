@@ -2,7 +2,7 @@
 #       Main fitting function         #
 #=====================================#
 #' @export
-scr.fit = function(capthist, traps, mask,
+scr.fit = function(capthist, traps, mask, detfn = "hn",
                    start = NULL, acoustic = FALSE, binom = FALSE,
                    toa = NULL, fix.g0 = FALSE, speed_sound = 330, trace = FALSE, method = "Nelder-Mead") {
     ## General error/exception handling
@@ -28,7 +28,14 @@ scr.fit = function(capthist, traps, mask,
     } else if(!is.null(toa) && length(start) != 5) {
         warning("Check time of arrival matrix has corresponding start parameter")
     }
-    
+    ## Setting detection function.
+    if (detfn == "hn"){
+        hn <- TRUE
+    } else if (detfn == "hhn"){
+        hn <- FALSE
+    } else {
+        stop("The argument detfn must either be 'hn' or 'hhn'.")
+    }
     ## Checking to see if things need unpacking
     if(class(capthist) == "capthist") {
         capthist = capthist[, 1, ]
@@ -46,9 +53,15 @@ scr.fit = function(capthist, traps, mask,
     ## - Machine minimum subtracted so as to avoid log errors
     start = start - .Machine$double.xmin
     if(acoustic | binom) {
+        g0.start <- start[2]
         start = c(log(start[1]),
-                  qlogis(start[2]),
+                  0,
                   log(start[3:length(start)]))
+        if (hn){
+            start[2] <- qlogis(g0.start)
+        } else {
+            start[2] <- log(g0.start)
+        }
     } else {
         ## 3 parameters, POISSON: all logged
         ## - May have 4th parameter (sigma_toa)
@@ -93,6 +106,7 @@ scr.fit = function(capthist, traps, mask,
                     use_toa = use_toa,
                     is_g0_fixed = fix.g0,
                     g0_fixed = g0.fixed,
+                    hn = hn,
                     trace = trace,
                     method = method,
                     hessian = TRUE)
@@ -103,6 +117,7 @@ scr.fit = function(capthist, traps, mask,
                     mask = mask,
                     maskDists = maskDists,
                     binom = binom,
+                    hn = hn,
                     method = method,
                     hessian = TRUE)
     }
@@ -129,7 +144,7 @@ scr.fit = function(capthist, traps, mask,
         waldCI = t(sapply(1:length(fittedPars),
                           function(i) fittedPars[i] + (c(-1, 1) * (qnorm(0.975) * se[i]))))
         ## Back-transforming the confidence limits, depending on whether we're using lambda0 or g0
-        if(acoustic || binom) {
+        if(hn) {
             waldCI = rbind(exp(waldCI[1, ]),
                            plogis(waldCI[2, ]),
                            exp(waldCI[3:length(fittedPars), ]))
@@ -141,9 +156,16 @@ scr.fit = function(capthist, traps, mask,
         ## - G = jacobian matrix of partial derivatives of back-transformed
         ##    - i.e. log(D) -> exp(D) -- deriv. --> exp(D)
         ##    - Note: 1st deriv of plogis (CDF) = dlogis (PDF)
-        G = diag(length(fittedPars)) * c(exp(fittedPars[1]),
-                                         dlogis(fittedPars[2]),
-                                         exp(fittedPars[3:length(fittedPars)]))
+        if (hn){
+            G.mult <- c(exp(fittedPars[1]),
+                           dlogis(fittedPars[2]),
+                           exp(fittedPars[3:length(fittedPars)]))
+        } else {
+            G.mult <- c(exp(fittedPars[1]),
+                           exp(fittedPars[2]),
+                           exp(fittedPars[3:length(fittedPars)]))
+        }
+        G = diag(length(fittedPars)) * G.mult
         se = sqrt(diag(G %*% solve(fit$hessian) %*% t(G)))
     }
     
@@ -158,7 +180,7 @@ scr.fit = function(capthist, traps, mask,
     if(acoustic) {
         parNames = c("lambda_c", parNames)
     }
-    if(binom || acoustic) {
+    if (hn) {
         if (fix.g0){
             parNames = c("D", "sigma", parNames)
             fittedPars = c(exp(fittedPars[1]),

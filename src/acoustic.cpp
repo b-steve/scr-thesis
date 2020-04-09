@@ -53,6 +53,7 @@ double scr_nll_acoustic(NumericVector pars,
                         bool use_toa,
 			bool is_g0_fixed,
 			double g0_fixed,
+			bool hn,
 			bool trace) {
   /*
    *  Storing/initialising (starting) parameter values.
@@ -69,7 +70,11 @@ double scr_nll_acoustic(NumericVector pars,
     sigma = exp(pars[1]);
     lambda_c = exp(pars[2]);
   } else {
-    g0 = R::plogis(pars[1], 0, 1, 1, 0);//exp(pars[1]) / (1 + exp(pars[1]));
+    if (hn){
+      g0 = R::plogis(pars[1], 0, 1, 1, 0);//exp(pars[1]) / (1 + exp(pars[1]));
+    } else {
+      g0 = exp(pars[1]);
+    }
     sigma = exp(pars[2]);
     lambda_c = exp(pars[3]);
   }
@@ -98,7 +103,11 @@ double scr_nll_acoustic(NumericVector pars,
   NumericMatrix maskProbs(maskDists.nrow(), maskDists.ncol());
   for(int i = 0; i < maskDists.nrow(); i++) {
     for(int j = 0; j < maskDists.ncol(); j++) {
-      maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))) + DBL_MIN;
+      if (hn){
+	maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))) + DBL_MIN;
+      } else {
+	maskProbs(i, j) = 1 - exp(-(g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))))) + DBL_MIN;
+      }
     }
   }
 
@@ -203,7 +212,7 @@ double scr_nll_acoustic(NumericVector pars,
   // Overall log-likelihood.
   double logLik = logf_n + logfCapt - nAnimals * log(sum(pAnimal));
   if (trace){
-    std::cout << "D: " << D << ", g0: " << g0 << ", sigma: " << sigma << ", lambda_c: " << lambda_c << ", sigma_toa: " << sigma_toa << std::endl;
+    std::cout << "D: " << D << ", g0: " << g0 << ", sigma: " << sigma << ", lambda_c: " << lambda_c << ", sigma_toa: " << sigma_toa << ", LL: " << logLik << std::endl;
   }
   // Returning log-likelihood
   return -logLik;

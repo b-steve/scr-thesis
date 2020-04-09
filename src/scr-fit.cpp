@@ -40,6 +40,7 @@ double scr_nll(NumericVector pars,
                NumericMatrix traps,
                NumericMatrix mask,
                NumericMatrix maskDists,
+	       bool hn,
                bool binom) {
   // Storing/initialising (starting) parameter values.
   double D = exp(pars[0]);
@@ -85,7 +86,7 @@ double scr_nll(NumericVector pars,
   NumericMatrix maskProbs(maskDists.nrow(), maskDists.ncol());
   NumericMatrix maskER(maskDists.nrow(), maskDists.ncol());
 
-  if(binom) {
+  if(hn) {
     for(int i = 0; i < maskDists.nrow(); i++) {
       for(int j = 0; j < maskDists.ncol(); j++) {
         maskProbs(i, j) = g0 * exp(-pow(maskDists(i, j), 2.0) / (2 * pow(sigma, 2.0))) + DBL_MIN;
