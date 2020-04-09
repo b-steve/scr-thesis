@@ -21,7 +21,8 @@
 #' # scr.data$capt = scr.sim(5, 75, scr.data$traps)
 #' # scr.data$bin.capt = scr.sim(0.8, 75, scr.data$traps, distr = "binom")
 #' # scr.data$acoustic.capt = scr.sim(0.8, 75, scr.data$traps, acoustic = TRUE, lambda_c = 2)
-#'
+#' \dontrun{
 #' data(scr.data)
 #' scr.fit(scr.data$capt, scr.data$traps, scr.data$mask)
+#' }
 "scr.data"
