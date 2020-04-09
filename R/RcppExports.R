@@ -5,16 +5,16 @@ numNonZero <- function(x) {
     .Call('_scr_numNonZero', PACKAGE = 'scr', x)
 }
 
-scr_nll_acoustic <- function(pars, caps, traps, mask, maskDists, nCalls, toa, toa_ssq, use_toa, is_g0_fixed, g0_fixed, trace) {
-    .Call('_scr_scr_nll_acoustic', PACKAGE = 'scr', pars, caps, traps, mask, maskDists, nCalls, toa, toa_ssq, use_toa, is_g0_fixed, g0_fixed, trace)
+scr_nll_acoustic <- function(pars, caps, traps, mask, maskDists, nCalls, toa, toa_ssq, use_toa, is_g0_fixed, g0_fixed, hn, trace) {
+    .Call('_scr_scr_nll_acoustic', PACKAGE = 'scr', pars, caps, traps, mask, maskDists, nCalls, toa, toa_ssq, use_toa, is_g0_fixed, g0_fixed, hn, trace)
 }
 
 eucdist_nll <- function(points, traplocations) {
     .Call('_scr_eucdist_nll', PACKAGE = 'scr', points, traplocations)
 }
 
-scr_nll <- function(pars, caps, traps, mask, maskDists, binom) {
-    .Call('_scr_scr_nll', PACKAGE = 'scr', pars, caps, traps, mask, maskDists, binom)
+scr_nll <- function(pars, caps, traps, mask, maskDists, hn, binom) {
+    .Call('_scr_scr_nll', PACKAGE = 'scr', pars, caps, traps, mask, maskDists, hn, binom)
 }
 
 pointgen <- function(n = 50L, xlim = as.numeric( c(0, 100)), ylim = as.numeric( c(0, 100))) {

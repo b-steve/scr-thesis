@@ -17,8 +17,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // scr_nll_acoustic
-double scr_nll_acoustic(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, NumericVector nCalls, NumericMatrix toa, NumericMatrix toa_ssq, bool use_toa, bool is_g0_fixed, double g0_fixed, bool trace);
-RcppExport SEXP _scr_scr_nll_acoustic(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP nCallsSEXP, SEXP toaSEXP, SEXP toa_ssqSEXP, SEXP use_toaSEXP, SEXP is_g0_fixedSEXP, SEXP g0_fixedSEXP, SEXP traceSEXP) {
+double scr_nll_acoustic(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, NumericVector nCalls, NumericMatrix toa, NumericMatrix toa_ssq, bool use_toa, bool is_g0_fixed, double g0_fixed, bool hn, bool trace);
+RcppExport SEXP _scr_scr_nll_acoustic(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP nCallsSEXP, SEXP toaSEXP, SEXP toa_ssqSEXP, SEXP use_toaSEXP, SEXP is_g0_fixedSEXP, SEXP g0_fixedSEXP, SEXP hnSEXP, SEXP traceSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -33,8 +33,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type use_toa(use_toaSEXP);
     Rcpp::traits::input_parameter< bool >::type is_g0_fixed(is_g0_fixedSEXP);
     Rcpp::traits::input_parameter< double >::type g0_fixed(g0_fixedSEXP);
+    Rcpp::traits::input_parameter< bool >::type hn(hnSEXP);
     Rcpp::traits::input_parameter< bool >::type trace(traceSEXP);
-    rcpp_result_gen = Rcpp::wrap(scr_nll_acoustic(pars, caps, traps, mask, maskDists, nCalls, toa, toa_ssq, use_toa, is_g0_fixed, g0_fixed, trace));
+    rcpp_result_gen = Rcpp::wrap(scr_nll_acoustic(pars, caps, traps, mask, maskDists, nCalls, toa, toa_ssq, use_toa, is_g0_fixed, g0_fixed, hn, trace));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -51,8 +52,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // scr_nll
-double scr_nll(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, bool binom);
-RcppExport SEXP _scr_scr_nll(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP binomSEXP) {
+double scr_nll(NumericVector pars, NumericMatrix caps, NumericMatrix traps, NumericMatrix mask, NumericMatrix maskDists, bool hn, bool binom);
+RcppExport SEXP _scr_scr_nll(SEXP parsSEXP, SEXP capsSEXP, SEXP trapsSEXP, SEXP maskSEXP, SEXP maskDistsSEXP, SEXP hnSEXP, SEXP binomSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -61,8 +62,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type traps(trapsSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type mask(maskSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type maskDists(maskDistsSEXP);
+    Rcpp::traits::input_parameter< bool >::type hn(hnSEXP);
     Rcpp::traits::input_parameter< bool >::type binom(binomSEXP);
-    rcpp_result_gen = Rcpp::wrap(scr_nll(pars, caps, traps, mask, maskDists, binom));
+    rcpp_result_gen = Rcpp::wrap(scr_nll(pars, caps, traps, mask, maskDists, hn, binom));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -95,9 +97,9 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_scr_numNonZero", (DL_FUNC) &_scr_numNonZero, 1},
-    {"_scr_scr_nll_acoustic", (DL_FUNC) &_scr_scr_nll_acoustic, 12},
+    {"_scr_scr_nll_acoustic", (DL_FUNC) &_scr_scr_nll_acoustic, 13},
     {"_scr_eucdist_nll", (DL_FUNC) &_scr_eucdist_nll, 2},
-    {"_scr_scr_nll", (DL_FUNC) &_scr_scr_nll, 6},
+    {"_scr_scr_nll", (DL_FUNC) &_scr_scr_nll, 7},
     {"_scr_pointgen", (DL_FUNC) &_scr_pointgen, 3},
     {"_scr_make_toa_ssq", (DL_FUNC) &_scr_make_toa_ssq, 3},
     {NULL, NULL, 0}
