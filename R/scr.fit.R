@@ -4,7 +4,7 @@
 #' @export
 scr.fit = function(capthist, traps, mask, detfn = "hn",
                    start = NULL, acoustic = FALSE, binom = FALSE,
-                   toa = NULL, fix.g0 = FALSE, speed_sound = 330, trace = FALSE, method = "Nelder-Mead") {
+                   toa = NULL, fix.g0 = FALSE, speed_sound = 330, trace = FALSE, method = "nlminb") {
     ## General error/exception handling
     if(is.null(start)) {
         warning("Initial pararameter values defaulting to c(D = 50, lambda0 = 5, sigma = 15)")
@@ -96,32 +96,78 @@ scr.fit = function(capthist, traps, mask, detfn = "hn",
     ## - Note that likelihood function changes for acoustic
     ## - Requires start values
     if(acoustic) {
-        fit = optim(start, scr.nll.acoustic,
-                    caps = capthist,
-                    traps = traps,
-                    mask = mask,
-                    maskDists = maskDists,
-                    toa = toa,
-                    toa_ssq = toa_ssq,
-                    use_toa = use_toa,
-                    is_g0_fixed = fix.g0,
-                    g0_fixed = g0.fixed,
-                    hn = hn,
-                    trace = trace,
-                    method = method,
-                    hessian = TRUE)
+        if (method == "nlminb"){
+            fit = nlminb(start, scr.nll.acoustic,
+                         caps = capthist,
+                         traps = traps,
+                         mask = mask,
+                         maskDists = maskDists,
+                         toa = toa,
+                         toa_ssq = toa_ssq,
+                         use_toa = use_toa,
+                         is_g0_fixed = fix.g0,
+                         g0_fixed = g0.fixed,
+                         hn = hn,
+                         trace = trace)
+            hess = optimHess(fit$par, scr.nll.acoustic,
+                             caps = capthist,
+                             traps = traps,
+                             mask = mask,
+                             maskDists = maskDists,
+                             toa = toa,
+                             toa_ssq = toa_ssq,
+                             use_toa = use_toa,
+                             is_g0_fixed = fix.g0,
+                             g0_fixed = g0.fixed,
+                             hn = hn,
+                             trace = trace)
+        } else {
+            fit = optim(start, scr.nll.acoustic,
+                        caps = capthist,
+                        traps = traps,
+                        mask = mask,
+                        maskDists = maskDists,
+                        toa = toa,
+                        toa_ssq = toa_ssq,
+                        use_toa = use_toa,
+                        is_g0_fixed = fix.g0,
+                        g0_fixed = g0.fixed,
+                        hn = hn,
+                        trace = trace,
+                        method = method,
+                        hessian = TRUE)
+            hess = fit$hessian
+        }
     } else {
-        fit = optim(start, scr.nll,
-                    caps = capthist,
-                    traps = traps,
-                    mask = mask,
-                    maskDists = maskDists,
-                    binom = binom,
-                    hn = hn,
-                    method = method,
-                    hessian = TRUE)
+        if (method == "nlminb"){
+            fit = nlminb(start, scr.nll,
+                         caps = capthist,
+                         traps = traps,
+                         mask = mask,
+                         maskDists = maskDists,
+                         binom = binom,
+                         hn = hn)
+            hess = optimHess(fit$par, scr.nll,
+                             caps = capthist,
+                             traps = traps,
+                             mask = mask,
+                             maskDists = maskDists,
+                             binom = binom,
+                             hn = hn)
+        } else {
+            fit = optim(start, scr.nll,
+                        caps = capthist,
+                        traps = traps,
+                        mask = mask,
+                        maskDists = maskDists,
+                        binom = binom,
+                        hn = hn,
+                        method = method,
+                        hessian = TRUE)
+            hess = fit$hess
+        }
     }
-    
+        
     ## Calculating confidence intervals
     ## - Using the (sqrt of) diagonals of (-ve) Hessian obtained from optim
     ##    - i.e. Information matrix
@@ -130,7 +176,7 @@ scr.fit = function(capthist, traps, mask, detfn = "hn",
     ## Note: fitted pars must be on LINK scale
     ##     : if matrix is singular, none of the SEs or CIs are calculated (inherits/try statement)
     fittedPars = fit$par
-    if(inherits(try(solve(fit$hessian), silent = TRUE), "try-error")) {
+    if(inherits(try(solve(hess), silent = TRUE), "try-error")) {
         ## Hessian is singular
         warning("Warning: singular hessian")
         ## SE and Wald CIs not calculated
@@ -140,7 +186,7 @@ scr.fit = function(capthist, traps, mask, detfn = "hn",
         cnames = c("Estimate", "SE", "Lower", "Upper")
     } else {
         ## Calculating basic Wald CIs
-        se = sqrt(diag(solve(fit$hess)))
+        se = sqrt(diag(solve(hess)))
         waldCI = t(sapply(1:length(fittedPars),
                           function(i) fittedPars[i] + (c(-1, 1) * (qnorm(0.975) * se[i]))))
         ## Back-transforming the confidence limits, depending on whether we're using lambda0 or g0
@@ -166,7 +212,7 @@ scr.fit = function(capthist, traps, mask, detfn = "hn",
                            exp(fittedPars[3:length(fittedPars)]))
         }
         G = diag(length(fittedPars)) * G.mult
-        se = sqrt(diag(G %*% solve(fit$hessian) %*% t(G)))
+        se = sqrt(diag(G %*% solve(hess) %*% t(G)))
     }
     
     
