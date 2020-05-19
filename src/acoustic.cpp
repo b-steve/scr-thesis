@@ -162,7 +162,9 @@ double scr_nll_acoustic(NumericVector pars,
     }
     NumericMatrix subCaps = caps(Range(subRow, subRow + nCalls[i] - 1), _);
     subRow += nCalls[i];
-
+    if (i == 0){
+      std::cout << subCaps << std::endl;
+    }
     // Looping through each mask point
     for (int j = 0; j < nMask; j++) {
       logfn_givenS[j] = log(R::dpois(nCalls[i], lambda_c * pDetected[j], 0) + DBL_MIN);
