@@ -168,10 +168,10 @@ double scr_nll_acoustic(NumericVector pars,
     // Looping through each mask point
     for (int j = 0; j < nMask; j++) {
       logfn_givenS[j] = log(R::dpois(nCalls[i], lambda_c * pDetected[j], 0) + DBL_MIN);
-
+      logfCapt_givenNS[j] = 0;
       // Looping through the calls (each sub-matrix)
       for (int k = 0; k < nCalls[i]; k++) {
-        logfCapt_givenNS[j] = -log(pDetected[j] + DBL_MIN);
+        logfCapt_givenNS[j] += -log(pDetected[j] + DBL_MIN);
 
         /*
          * Checking to see whether Time Of Arrival (TOA) has been specified
